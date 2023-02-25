@@ -1,0 +1,165 @@
+<div class="container w-75">
+  <p class="text-center h1 fw-bold mx-1 mx-md-4 mt-4">Sign in</p>
+  <mat-tab-group mat-align-tab="center">
+    <mat-tab label="User">
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </head>
+        <body>
+          <div *ngIf="usererr" class="alert alert-danger">{{ usererr }}</div>
+          <form [formGroup]="UserloginForm" (ngSubmit)="addUser(UserloginForm)">
+            <div class="form-outline my-4">
+              <label class="form-label" for="email">User Email </label>
+              <input
+                type="email"
+                id="email"
+                class="form-control form-control-lg"
+                formControlName="Email"
+              />
+              <div
+                class="alert alert-danger"
+                *ngIf="
+                  UserloginForm.controls['Email'].invalid &&
+                  UserloginForm.controls['Email'].touched
+                "
+              >
+                <span
+                  *ngIf="UserloginForm.controls['Email'].hasError('required')"
+                  >Your Email is Required</span
+                >
+                <span
+                  *ngIf="UserloginForm.controls['Email'].hasError('pattern')"
+                  >Email must match pattern like : "example1@gmail.com"</span
+                >
+              </div>
+            </div>
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="userpass">Password</label>
+              <input
+                type="password"
+                id="userpass"
+                class="form-control form-control-lg"
+                formControlName="Password"
+              />
+              <div
+                class="alert alert-danger"
+                *ngIf="
+                  UserloginForm.controls['Password'].invalid &&
+                  UserloginForm.controls['Password'].touched
+                "
+              >
+                <span
+                  *ngIf="
+                    UserloginForm.controls['Password'].hasError('required')
+                  "
+                  >Password is Required</span
+                >
+              </div>
+            </div>
+            <div class="text-center mb-3 mb-lg-4">
+              <button
+                [disabled]="UserloginForm.invalid"
+                class="btn btn-danger btn-lg w-25"
+                type="submit"
+              >
+                <span>Login</span>
+                <i *ngIf="userisLoading" class="fas fa-spinner fa-spin"></i>
+              </button>
+            </div>
+          </form>
+        </body>
+      </html>
+    </mat-tab>
+
+    <mat-tab label="Company">
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8" />
+          <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+        </head>
+        <body>
+          <div *ngIf="companyerr" class="alert alert-danger">
+            {{ companyerr }}
+          </div>
+          <form
+            [formGroup]="CompanyloginForm"
+            (ngSubmit)="addCompany(CompanyloginForm)"
+          >
+            <div class="form-outline my-4">
+              <label class="form-label" for="companyname">Comapny Name</label>
+              <input
+                type="text"
+                id="companyname"
+                class="form-control form-control-lg"
+                formControlName="Company_name"
+              />
+              <div
+                class="alert alert-danger"
+                *ngIf="
+                  CompanyloginForm.controls['Company_name'].invalid &&
+                  CompanyloginForm.controls['Company_name'].touched
+                "
+              >
+                <span
+                  *ngIf="
+                    CompanyloginForm.controls['Company_name'].hasError(
+                      'required'
+                    )
+                  "
+                  >Company Name is Required</span
+                >
+              </div>
+            </div>
+
+            <div class="form-outline mb-4">
+              <label class="form-label" for="Companypass">Password</label>
+              <input
+                type="password"
+                id="Companypass"
+                class="form-control form-control-lg"
+                formControlName="Password"
+              />
+              <div
+                class="alert alert-danger"
+                *ngIf="
+                  CompanyloginForm.controls['Password'].invalid &&
+                  CompanyloginForm.controls['Password'].touched
+                "
+              >
+                <span
+                  *ngIf="
+                    CompanyloginForm.controls['Password'].hasError('required')
+                  "
+                  >Password is Required</span
+                >
+              </div>
+            </div>
+            <div class="text-center mb-3 mb-lg-4">
+              <button
+                [disabled]="CompanyloginForm.invalid"
+                class="btn btn-danger btn-lg w-25"
+                type="submit"
+              >
+                <span>Login</span>
+                <i *ngIf="companyisLoading" class="fas fa-spinner fa-spin"></i>
+              </button>
+            </div>
+          </form>
+        </body>
+      </html>
+    </mat-tab>
+  </mat-tab-group>
+</div>

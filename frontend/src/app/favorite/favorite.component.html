@@ -1,0 +1,14 @@
+<div class="container py-5">
+  <div class="row g-3 text-center">
+    <div *ngFor="let item of arr" class="col-md-4 px-2">
+      <div class="cartContent text-center p-5 bg-warning shadow">
+        <h2>desc:{{ item.desc }}</h2>
+        <h2>title:{{ item.title }}</h2>
+        <p>price:{{ item.price }}</p>
+        <button (click)="deleteFromFavorite(item._id)" class="btn btn-danger">
+          Remove From Favourite
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

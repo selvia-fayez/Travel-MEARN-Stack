@@ -1,0 +1,61 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col">
+      <img class="w-100" [src]="tripData.data.photo" alt="trip img" />
+    </div>
+    <div class="col d-flex ms-4">
+      <div>
+        <p class="h1 mt-3 p-0 mb-0 text-warning">
+          {{ tripData.data.title }}
+        </p>
+        <p class="text-muted d-inline-block m-0">
+          By {{ tripData.data.createdBy.Company_name }}
+        </p>
+
+        <div
+          class="evaluation d-flex justify-content-between align-items-center my-2"
+        >
+          <div class="star d-flex">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+        </div>
+        <p class="py-2 text-muted my-3">
+          {{ tripData.data.desc }}
+        </p>
+        <p class="h5">City: {{ tripData.data.city }}</p>
+        <p class="h5">Trip Distance: {{ tripData.data.distance }}</p>
+        <div class="">
+          <p class="h5">
+            <i class="fa-regular fa-calendar-days"></i> Travel Date :
+            {{ tripData.data.startDate }}
+          </p>
+          <p class="h5">
+            <i class="fa-regular fa-calendar-days"></i> Return Date :
+            {{ tripData.data.endDate }}
+          </p>
+        </div>
+        <div class="d-flex align-items-center mt-5">
+          <p class="h5">Available Seats :</p>
+          <p class="text-warning h4 mx-3">
+            {{ tripData.data.maxGroupSize }} Seats
+          </p>
+        </div>
+        <div class="d-flex align-items-center">
+          <p class="h5">Price :</p>
+          <p class="h1 mx-4">${{ tripData.data.price }}</p>
+        </div>
+        <a
+          class="btn btn-warning mt-3 py-2"
+          (click)="goCheckout()"
+          style="color: #131722"
+        >
+          <i class="fa-solid fa-add"></i> Checkout
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

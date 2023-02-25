@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
+
+:root {
+    --bg-main: #131722;
+    --light-bg: #24baef;
+    --main-font: 'Montserrat Alternates', sans-serif;
+    --text-color: #fff;
+    --border-color: #a8a8a83d;
+    --btn-color: rgba(255, 166, 0, 0.959);
+}
+*{
+    font-family: var(--main-font);
+}
+body {
+    background-color: var(--bg-main);
+    font-family: var(--main-font);
+    color: var(--text-color); 
+}
+
+a,
+a:hover {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+.input-mine {
+    background-color: transparent;
+    color: var(--text-color);
+    border: solid 1px var(--border-color);
+}
+.orangecolor{
+    background-color: rgba(255, 166, 0, 0.959);
+}
+
+.card-shadow{
+    box-shadow: 10px 10px 10px 0px  rgba(227, 224,227, 0.3);
+}

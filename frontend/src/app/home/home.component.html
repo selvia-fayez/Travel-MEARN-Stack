@@ -1,0 +1,22 @@
+<div class="container py-5">
+  <div class="row g-3 text-center">
+    <div *ngFor="let item of trips" class="col-md-4">
+      <div class="homeContent bg-info p-5">
+        <h2>desc:{{ item.desc }}</h2>
+        <h2>title:{{ item.title }}</h2>
+        <p>price:{{ item.price }}</p>
+        <div class="btns d-flex">
+          <a (click)="addToCart(item._id)" class="btn btn-warning mx-3"
+            >Add To Cart</a
+          >
+          <a (click)="addToFavorite(item._id)" class="btn btn-success"
+            >Add To Favourite</a
+          >
+        </div>
+        <a [routerLink]="['/tripDetails', item._id]" class="btn btn-danger m-3"
+          >See More</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

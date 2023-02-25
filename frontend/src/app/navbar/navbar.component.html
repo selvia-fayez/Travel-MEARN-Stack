@@ -1,0 +1,107 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+  <div class="container-fluid">
+    <!-- <a class="navbar-brand"><img src="../../assets/logo-dark(1).webp" /></a> -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link navbar-brand fw-bolder">Travelia</a>
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="UserisLogin"
+            class="nav-link"
+            routerLink="UserHome"
+            routerLinkActive="active"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="CompanyisLogin"
+            class="nav-link"
+            routerLink="CompanyHome"
+            routerLinkActive="active"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="UserisLogin"
+            class="nav-link"
+            routerLink="cart"
+            routerLinkActive="active"
+            >Cart</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="UserisLogin"
+            class="nav-link"
+            routerLink="favorite"
+            routerLinkActive="active"
+            >Favourite</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="CompanyisLogin"
+            class="nav-link"
+            routerLink="CompanyProfile"
+            routerLinkActive="active"
+            >CompanyProfile</a
+          >
+        </li>
+      </ul>
+
+      <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item d-flex align-items-center">
+          <span>
+            <i class="fa-brands fa-facebook m-2"></i>
+            <i class="fa-brands fa-google m-2"></i>
+            <i class="fa-brands fa-twitter m-2"></i>
+            <i class="fa-brands fa-instagram m-2"></i>
+          </span>
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="!UserisLogin && !CompanyisLogin"
+            class="nav-link"
+            routerLink="signin"
+            routerLinkActive="active"
+            >Sign in</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="!UserisLogin && !CompanyisLogin"
+            class="nav-link"
+            routerLink="signup"
+            routerLinkActive="active"
+            >Sign up</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            *ngIf="UserisLogin || CompanyisLogin"
+            class="nav-link"
+            routerLink="register"
+            routerLinkActive="active"
+            (click)="signOut()"
+            >Logout</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
