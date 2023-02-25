@@ -22,11 +22,15 @@ const createTour = async (req, res) => {
 // update Tour
 const updateTour = async (req, res) => {
   const id = req.params.id;
+  console.log(req.id);
   try {
+    const photo =
+      `${req.protocol}://${req.get("host")}/uploads/` + req.file.filename;
+    let data = { ...req.body, photo };
     let updateTour = await Tour.findByIdAndUpdate(
       id,
       {
-        $set: req.body,
+        $set: data,
       },
       { new: true }
     );

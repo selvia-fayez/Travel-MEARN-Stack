@@ -79,9 +79,22 @@ export class CompanyProfileComponent {
   resetForm() {
     this.addTripForm.reset();
   }
+
+  editTripForm: FormGroup = new FormGroup({
+    title: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    address: new FormControl('', [Validators.required]),
+    distance: new FormControl('', [Validators.required]),
+    photo: new FormControl('', [Validators.required]),
+    desc: new FormControl('', [Validators.required]),
+    price: new FormControl('', [Validators.required]),
+    maxGroupSize: new FormControl('', [Validators.required]),
+    startDate: new FormControl('', [Validators.required]),
+    endDate: new FormControl('', [Validators.required]),
+  });
   show(trip: any) {
     this.currentid = trip._id;
-    this.addTripForm.patchValue({
+    this.editTripForm.patchValue({
       title: trip.title,
       price: trip.price,
       city: trip.city,
@@ -96,8 +109,8 @@ export class CompanyProfileComponent {
     });
   }
 
-  update() {
-    this.tripServ.update(this.currentid, this.addTripForm.value).subscribe({
+  editTrip(editTripForm: FormGroup) {
+    this.tripServ.update(this.currentid, editTripForm.value).subscribe({
       next: (response) => {
         this.isLoading = false;
         if (response.message === 'Successfully Updated tour') {
@@ -129,5 +142,13 @@ export class CompanyProfileComponent {
       photo: file,
     });
     this.addTripForm.get('photo')?.updateValueAndValidity();
+  }
+  onPickEditImage(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const file = input.files ? input.files[0] : null;
+    this.editTripForm.patchValue({
+      photo: file,
+    });
+    this.editTripForm.get('photo')?.updateValueAndValidity();
   }
 }

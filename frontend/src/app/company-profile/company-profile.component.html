@@ -354,7 +354,7 @@
       <div class="modal-body text-black">
         <div *ngIf="triperr" class="alert alert-danger">{{ triperr }}</div>
         <div class="container-fluid">
-          <form [formGroup]="addTripForm" (ngSubmit)="addTrip(addTripForm)">
+          <form [formGroup]="editTripForm" (ngSubmit)="editTrip(editTripForm)">
             <div class="row">
               <div class="col-md-4 col-sm-12 my-2">
                 <label for="title">Title</label>
@@ -367,12 +367,12 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['title'].invalid &&
-                    addTripForm.controls['title'].touched
+                    editTripForm.controls['title'].invalid &&
+                    editTripForm.controls['title'].touched
                   "
                 >
                   <span
-                    *ngIf="addTripForm.controls['title'].hasError('required')"
+                    *ngIf="editTripForm.controls['title'].hasError('required')"
                     >Title is Required</span
                   >
                 </div>
@@ -388,12 +388,12 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['city'].invalid &&
-                    addTripForm.controls['city'].touched
+                    editTripForm.controls['city'].invalid &&
+                    editTripForm.controls['city'].touched
                   "
                 >
                   <span
-                    *ngIf="addTripForm.controls['city'].hasError('required')"
+                    *ngIf="editTripForm.controls['city'].hasError('required')"
                     >City is Required</span
                   >
                 </div>
@@ -409,12 +409,14 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['address'].invalid &&
-                    addTripForm.controls['address'].touched
+                    editTripForm.controls['address'].invalid &&
+                    editTripForm.controls['address'].touched
                   "
                 >
                   <span
-                    *ngIf="addTripForm.controls['address'].hasError('required')"
+                    *ngIf="
+                      editTripForm.controls['address'].hasError('required')
+                    "
                     >Address is Required</span
                   >
                 </div>
@@ -430,12 +432,12 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['price'].invalid &&
-                    addTripForm.controls['price'].touched
+                    editTripForm.controls['price'].invalid &&
+                    editTripForm.controls['price'].touched
                   "
                 >
                   <span
-                    *ngIf="addTripForm.controls['price'].hasError('required')"
+                    *ngIf="editTripForm.controls['price'].hasError('required')"
                     >Price is Required</span
                   >
                 </div>
@@ -451,13 +453,13 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['distance'].invalid &&
-                    addTripForm.controls['distance'].touched
+                    editTripForm.controls['distance'].invalid &&
+                    editTripForm.controls['distance'].touched
                   "
                 >
                   <span
                     *ngIf="
-                      addTripForm.controls['distance'].hasError('required')
+                      editTripForm.controls['distance'].hasError('required')
                     "
                     >Distance is Required</span
                   >
@@ -474,13 +476,13 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['maxGroupSize'].invalid &&
-                    addTripForm.controls['maxGroupSize'].touched
+                    editTripForm.controls['maxGroupSize'].invalid &&
+                    editTripForm.controls['maxGroupSize'].touched
                   "
                 >
                   <span
                     *ngIf="
-                      addTripForm.controls['maxGroupSize'].hasError('required')
+                      editTripForm.controls['maxGroupSize'].hasError('required')
                     "
                     >Max Group Size is Required</span
                   >
@@ -497,13 +499,13 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['startDate'].invalid &&
-                    addTripForm.controls['startDate'].touched
+                    editTripForm.controls['startDate'].invalid &&
+                    editTripForm.controls['startDate'].touched
                   "
                 >
                   <span
                     *ngIf="
-                      addTripForm.controls['startDate'].hasError('required')
+                      editTripForm.controls['startDate'].hasError('required')
                     "
                     >Start Date is Required</span
                   >
@@ -520,12 +522,14 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['endDate'].invalid &&
-                    addTripForm.controls['endDate'].touched
+                    editTripForm.controls['endDate'].invalid &&
+                    editTripForm.controls['endDate'].touched
                   "
                 >
                   <span
-                    *ngIf="addTripForm.controls['endDate'].hasError('required')"
+                    *ngIf="
+                      editTripForm.controls['endDate'].hasError('required')
+                    "
                     >End Date is Required</span
                   >
                 </div>
@@ -538,18 +542,18 @@
                   type="file"
                   accept="image/png, image/jpeg"
                   class="form-control"
-                  (change)="onPickImage($event)"
+                  (change)="onPickEditImage($event)"
                   FormControlName="photo"
                 />
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['photo'].invalid &&
-                    addTripForm.controls['photo'].touched
+                    editTripForm.controls['photo'].invalid &&
+                    editTripForm.controls['photo'].touched
                   "
                 >
                   <span
-                    *ngIf="addTripForm.controls['photo'].hasError('required')"
+                    *ngIf="editTripForm.controls['photo'].hasError('required')"
                     >Photo is Required</span
                   >
                 </div>
@@ -564,12 +568,12 @@
                 <div
                   class="alert alert-danger"
                   *ngIf="
-                    addTripForm.controls['desc'].invalid &&
-                    addTripForm.controls['desc'].touched
+                    editTripForm.controls['desc'].invalid &&
+                    editTripForm.controls['desc'].touched
                   "
                 >
                   <span
-                    *ngIf="addTripForm.controls['desc'].hasError('required')"
+                    *ngIf="editTripForm.controls['desc'].hasError('required')"
                     >Description is Required</span
                   >
                 </div>
@@ -578,11 +582,10 @@
 
             <div class="text-center mb-3 mb-lg-4">
               <button
-                [disabled]="addTripForm.invalid"
+                [disabled]="editTripForm.invalid"
                 data-bs-dismiss="modal"
                 type="submit"
                 class="btn btn-outline-info btn-lg w-25"
-                (click)="update()"
               >
                 <span>update</span>
                 <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
