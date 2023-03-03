@@ -1,0 +1,181 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col-6 mt-4">
+      <owl-carousel-o [options]="customOptions">
+        <ng-container *ngFor="let image of tripData.data.photo">
+          <ng-template carouselSlide>
+            <img [src]="image" style="height: 70vh" />
+          </ng-template>
+        </ng-container>
+      </owl-carousel-o>
+    </div>
+    <div class="col d-flex ms-4">
+      <div>
+        <p class="h1 mt-3 p-0 mb-0 text-warning">
+          {{ tripData.data.title }}
+        </p>
+        <p class="text-muted d-inline-block m-0">
+          By {{ tripData.data.createdBy.Company_name }}
+        </p>
+
+        <div class="evaluation d-flex my-2">
+          <div *ngFor="let i of fakeArray" class="star d-flex mt-1">
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <a class="ms-2 link-info">({{ reviewLength }} reviews)</a>
+        </div>
+        <p class="py-2 text-muted my-3">
+          {{ tripData.data.desc }}
+        </p>
+        <p class="h5">City: {{ tripData.data.city }}</p>
+        <p class="h5">Trip Distance: {{ tripData.data.distance }}</p>
+        <div class="">
+          <p class="h5">
+            <i class="fa-regular fa-calendar-days"></i> Travel Date :
+            {{ tripData.data.startDate }}
+          </p>
+          <p class="h5">
+            <i class="fa-regular fa-calendar-days"></i> Return Date :
+            {{ tripData.data.endDate }}
+          </p>
+        </div>
+        <div class="d-flex align-items-center mt-5">
+          <p class="h5">Available Seats :</p>
+          <p class="text-warning h4 mx-3">
+            {{ tripData.data.maxGroupSize }} Seats
+          </p>
+        </div>
+        <div class="d-flex align-items-center">
+          <p class="h5">Price :</p>
+          <p class="h1 mx-4">${{ tripData.data.price }}</p>
+        </div>
+        <a
+          class="btn btn-warning mt-3 py-2"
+          routerLink="/checkout"
+          style="color: #131722"
+        >
+          <i class="fa-solid fa-add"></i> Checkout
+        </a>
+        <a
+          class="btn btn-warning mt-3 py-2 ms-3"
+          (click)="addToCart(tripData.data._id)"
+          style="color: #131722"
+        >
+          <i class="fa-solid fa-cart-plus"></i> Add To cart
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-5">
+    <div class="col">
+      <p class="h2">Write a review</p>
+      <div *ngIf="err" class="alert alert-danger">{{ err }}</div>
+      <form [formGroup]="ReviewForm" (ngSubmit)="addReview(ReviewForm)">
+        <div class="row">
+          <div class="form-outline my-4">
+            <label class="form-label h6" for="title"
+              >Give your review a title</label
+            >
+            <input
+              id="title"
+              class="form-control form-control-lg"
+              placeholder="Summarize your experience"
+              formControlName="title"
+            />
+            <div
+              class="alert alert-danger"
+              *ngIf="
+                ReviewForm.controls['title'].invalid &&
+                ReviewForm.controls['title'].touched
+              "
+            >
+              <span *ngIf="ReviewForm.controls['title'].hasError('required')"
+                >Title is Required</span
+              >
+            </div>
+          </div>
+          <div class="form-outline my-4">
+            <label class="form-label h6" for="review">Leave a review</label>
+            <textarea
+              type="text"
+              id="review"
+              class="form-control form-control-lg"
+              placeholder="Share your experience"
+              formControlName="reviewText"
+            ></textarea>
+            <div
+              class="alert alert-danger"
+              *ngIf="
+                ReviewForm.controls['reviewText'].invalid &&
+                ReviewForm.controls['reviewText'].touched
+              "
+            >
+              <span
+                *ngIf="ReviewForm.controls['reviewText'].hasError('required')"
+                >Review is Required</span
+              >
+            </div>
+          </div>
+          <div class="form-outline my-4">
+            <label class="form-label h6" for="rate">Rate Your Experience</label>
+            <input
+              type="number"
+              id="rate"
+              class="form-control form-control-lg"
+              formControlName="rating"
+              placeholder="Enter Number from 1 To 5"
+              min="1"
+              max="5"
+            />
+            <div
+              class="alert alert-danger"
+              *ngIf="
+                ReviewForm.controls['rating'].invalid &&
+                ReviewForm.controls['rating'].touched
+              "
+            >
+              <span *ngIf="ReviewForm.controls['rating'].hasError('required')"
+                >Rating is Required</span
+              >
+              <span *ngIf="ReviewForm.controls['rating'].hasError('min')"
+                >You can't give rate less than 1</span
+              >
+              <span *ngIf="ReviewForm.controls['rating'].hasError('max')"
+                >You can't give rate greater than 5</span
+              >
+            </div>
+          </div>
+        </div>
+        <div class="text-center mb-3 mb-lg-4">
+          <button
+            [disabled]="ReviewForm.invalid"
+            class="btn btn-warning btn-lg w-50"
+            type="submit"
+          >
+            <span>Add Review</span>
+            <i *ngIf="isLoading" class="fas fa-spinner fa-spin"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col" id="reviews">
+      <p class="h2">Reviews</p>
+      <div style="max-height: 70vh; overflow: scroll">
+        <div *ngFor="let review of reviews">
+          <div class="mt-5">
+            <p *ngIf="review.createdBy" class="text-muted d-inline-block m-0">
+              Review By: {{ review.createdBy.User_name }}
+            </p>
+            <p class="h1 p-0 mb-0 text-warning">
+              {{ review.title }}
+            </p>
+            <p class="">
+              {{ review.reviewText }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

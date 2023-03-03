@@ -1,4 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConstantPool } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -10,32 +11,41 @@ import { url } from './baseUrl';
 export class TripService {
   // headers =new HttpHeaders().set('Content-type','application/json').set('Accept','application/json');
 
-  constructor(private _HttpClint: HttpClient, private _Router: Router) {}
+  constructor(private _HttpClient: HttpClient, private _Router: Router) {}
 
   addTrip(tripdata: any): Observable<any> {
     const formData = new FormData();
     for (let key in tripdata) {
       formData.append(key, tripdata[key]);
+      if (key === 'photo') {
+        for (let i = 0; i < tripdata['photo'].length; i++) {
+          formData.append('photo', tripdata['photo'][i]);
+        }
+      }
     }
-    return this._HttpClint.post('http://localhost:3000/tours/', formData);
+    return this._HttpClient.post('http://localhost:3000/tours/', formData);
   }
 
   getTrips(): Observable<any> {
-    return this._HttpClint.get(url + 'tours');
+    return this._HttpClient.get(url + 'tours');
   }
   getCompanyTrip(): Observable<any> {
     const companyId = localStorage.getItem('companyID');
-    return this._HttpClint.get(url + 'tours/company/' + companyId);
+    return this._HttpClient.get(url + 'tours/company/' + companyId);
   }
   update(id: any, tripdata: any): Observable<any> {
     const formData = new FormData();
     for (let key in tripdata) {
       formData.append(key, tripdata[key]);
+      if (key === 'photo') {
+        for (let i = 0; i < tripdata['photo'].length; i++) {
+          formData.append('photo', tripdata['photo'][i]);
+        }
+      }
     }
-    return this._HttpClint.put(url + `tours/${id}`, formData);
+    return this._HttpClient.put(url + `tours/${id}`, formData);
   }
   deleteTrip(id: any): Observable<any> {
-    return this._HttpClint.delete(url + `tours/${id}`);
-    //    return this._HttpClint.delete(url + `tours`, id);
+    return this._HttpClient.delete(url + `tours/${id}`);
   }
 }

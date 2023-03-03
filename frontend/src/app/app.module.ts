@@ -17,6 +17,8 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { CartdetailsComponent } from './cartdetails/cartdetails.component';
+import { ReviewComponent } from './review/review.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +32,7 @@ import { CartdetailsComponent } from './cartdetails/cartdetails.component';
     CompanyInfoComponent,
     FavoriteComponent,
     CartdetailsComponent,
+    ReviewComponent,
   ],
   imports: [
     BrowserModule,

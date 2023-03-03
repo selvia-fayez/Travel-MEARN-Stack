@@ -1,21 +1,52 @@
-<div class="container py-5">
-  <div class="row g-3 text-center">
-    <div *ngFor="let item of trips" class="col-md-4">
-      <div class="homeContent bg-info p-5">
-        <h2>desc:{{ item.desc }}</h2>
-        <h2>title:{{ item.title }}</h2>
-        <p>price:{{ item.price }}</p>
-        <div class="btns d-flex">
-          <a (click)="addToCart(item._id)" class="btn btn-warning mx-3"
-            >Add To Cart</a
+<div class="container-fluid">
+  <div class="row">
+    <div class="home d-flex align-items-center">
+      <div class="homeContent text-center mb-5 w-100">
+        <h5 class="text-white font-weight-bold">WELCOME TO WORLD</h5>
+        <br />
+        <h5 class="lead fw-bold text-white">
+          Visit <span class="changecontent"></span>
+        </h5>
+        <br />
+        <button class="btn btn-warning">Let's Start</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div *ngFor="let item of trips" class="col-md-4 mt-5">
+      <div class="card text-center" style="height: 60vh">
+        <div class="card">
+          <owl-carousel-o [options]="customOptions">
+            <ng-container *ngFor="let image of item.photo">
+              <ng-template carouselSlide>
+                <img [src]="image" style="height: 50vh" />
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+        </div>
+
+        <div class="card-body text overlay" style="z-index: 5">
+          <p class="card-title text-dark bold h3 mt-3">{{ item.title }}</p>
+          <p class="card-text text-dark h6">
+            {{ item.desc }}
+          </p>
+
+          <a [routerLink]="['/review', item._id]" class="btn btn-dark mt-5"
+            >See More</a
           >
-          <a (click)="addToFavorite(item._id)" class="btn btn-success"
-            >Add To Favourite</a
+
+          <a class="btn position-absolute top-0 end-0">
+            <i
+              (click)="addToFavorite(item._id)"
+              class="material-icons"
+              style="color: darkred"
+              >favorite</i
+            ></a
           >
         </div>
-        <a [routerLink]="['/tripDetails', item._id]" class="btn btn-danger m-3"
-          >See More</a
-        >
+        <div class="card-footer text-black py-3">{{ item.title }}</div>
       </div>
     </div>
   </div>

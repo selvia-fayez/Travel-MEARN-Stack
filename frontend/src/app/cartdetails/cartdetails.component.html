@@ -1,4 +1,4 @@
-<div class="container py-5">
+<!-- <div class="container py-5">
   <div class="row g-3 text-center">
     <div *ngFor="let item of arr" class="col-md-4 px-2">
       <div class="cartContent text-center p-5 bg-secondary shadow">
@@ -9,6 +9,63 @@
           Remove From Cart
         </button>
       </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="container">
+  <div class="row my-3">
+    <ul class="col-md-9 me-3">
+      <li *ngFor="let cartItem of arr">
+        <div>
+          <!-- <img [src]="cartItem.photo[0]" [alt]="cartItem.title" /> -->
+        </div>
+        <div>
+          <a routerLink="['/review', cartItem._id]">
+            {{ cartItem.title }}
+          </a>
+        </div>
+        <div>
+          <select
+            #quantitySelect
+            [value]="cartItem.totalQuantity"
+            (change)="changeQuantity(cartItem, quantitySelect.value)"
+          >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+          </select>
+        </div>
+        <div>
+          {{ cartItem.totalPrice | currency }}
+        </div>
+        <div>Available Seats: {{ cartItem.availableSeats }}</div>
+        <div>
+          <button
+            class="remove-button"
+            (click)="
+              deleteFromCart(
+                cartItem._id,
+                cartItem.totalQuantity,
+                cartItem.price,
+                cartItem.availableSeats
+              )
+            "
+          >
+            Remove
+          </button>
+        </div>
+      </li>
+    </ul>
+    <div class="checkout col-md-3">
+      <div>
+        <div class="trips-count">{{ TotalQuantity }}</div>
+        <div class="total-price">{{ TotalPrice | currency }}</div>
+      </div>
+
+      <a routerLink="/checkout">Proceed to Checkout</a>
     </div>
   </div>
 </div>

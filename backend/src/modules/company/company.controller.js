@@ -1,5 +1,4 @@
 import Company from "../../../models/Company.js";
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/generateTooken.js";
 

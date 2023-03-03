@@ -8,6 +8,31 @@ import { TourService } from '../services/tour.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  customOptions: any = {
+    loop: true,
+    mouseDrag: false,
+    touchDrag: false,
+    pullDrag: false,
+    autoplay: true,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 2,
+      },
+      740: {
+        items: 3,
+      },
+      940: {
+        items: 6,
+      },
+    },
+    nav: false,
+  };
   trips: any;
   trip: any;
   favorite: any;
@@ -23,14 +48,7 @@ export class HomeComponent {
       },
     });
   }
-  addToCart(id: any) {
-    this._UserService.addToCart(id).subscribe({
-      next: (res: any) => {
-        this.trip = res.data;
-        this._Router.navigate(['/cart']);
-      },
-    });
-  }
+
   addToFavorite(id: any) {
     this._UserService.addToFavorite(id).subscribe({
       next: (res: any) => {

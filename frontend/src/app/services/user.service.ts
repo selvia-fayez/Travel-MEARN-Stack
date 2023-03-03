@@ -29,10 +29,17 @@ export class UserService {
       'http://localhost:3000/users/favorite/' + userID
     );
   }
-  deleteFromCart(id: any) {
+  deleteFromCart(
+    id: any,
+    ItemQuantity: any,
+    ItemPrice: any,
+    totalPrice: any,
+    availableSeats: any
+  ) {
     let userID = localStorage.getItem('userID');
+    const query = `&ItemQuantity=${ItemQuantity}&ItemPrice=${ItemPrice}&totalPrice=${totalPrice}&availableSeats=${availableSeats}`;
     return this._HttpClient.delete(
-      'http://localhost:3000/users/cart/' + userID + '?tripId=' + id,
+      'http://localhost:3000/users/cart/' + userID + '?tripId=' + id + query,
       {}
     );
   }
@@ -40,6 +47,21 @@ export class UserService {
     let userID = localStorage.getItem('userID');
     return this._HttpClient.delete(
       'http://localhost:3000/users/favorite/' + userID + '?tripId=' + id,
+      {}
+    );
+  }
+  updateQuantity(
+    tripID: any,
+    totalQuantity: any,
+    totalPrice: any,
+    availableSeats: any,
+    ItemPrice: any,
+    ItemQuanity: any
+  ): Observable<any> {
+    let userID = localStorage.getItem('userID');
+    const query = `?totalQuantity=${totalQuantity}&totalPrice=${totalPrice}&availableSeats=${availableSeats}&ItemPrice=${ItemPrice}&ItemQuanity=${ItemQuanity}`;
+    return this._HttpClient.put(
+      `http://localhost:3000/users/cart/${userID}/${tripID}${query}`,
       {}
     );
   }

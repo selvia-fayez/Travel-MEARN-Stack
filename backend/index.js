@@ -8,6 +8,7 @@ import userRouter from "./src/modules/user/user.router.js";
 import companyRouter from "./src/modules/company/company.router.js";
 import { connect } from "./database/dbconnection.js";
 import bookingRouter from "./src/modules/booking/booking.router.js";
+import reviewRouter from "./src/modules/review/review.router.js";
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
@@ -20,6 +21,7 @@ app.use("/tours", tourRouter);
 app.use("/users", userRouter);
 app.use("/company", companyRouter);
 app.use("/checkout", bookingRouter);
+app.use("/review", reviewRouter);
 
 app.listen(port, () => {
   connect();

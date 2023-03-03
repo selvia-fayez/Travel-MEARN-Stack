@@ -13,25 +13,72 @@ export class CartdetailsComponent {
   trip: any;
   deletedTrip: any;
   arr: any[] = [];
+  cartDetails: any;
+  TotalPrice: any;
+  TotalQuantity: any = 0;
+
   constructor(private _UserService: UserService) {}
   ngOnInit() {
     this._UserService.getUserCart().subscribe({
       next: (res: any) => {
         this.arr = res.cart.cart;
+        this.cartDetails = res.cartDetails;
+        this.TotalPrice = this.cartDetails.totalPrice;
+        this.TotalQuantity = this.cartDetails.totalQuantity;
       },
     });
   }
-  deleteFromCart(id: any) {
-    this._UserService.deleteFromCart(id).subscribe({
-      next: (res: any) => {
-        this.deleteCart(id);
-      },
-    });
+  deleteFromCart(
+    id: any,
+    ItemQuantity: any,
+    ItemPrice: any,
+    availableSeats: any
+  ) {
+    availableSeats += parseInt(ItemQuantity);
+    this._UserService
+      .deleteFromCart(
+        id,
+        ItemQuantity,
+        ItemPrice,
+        this.TotalPrice,
+        availableSeats
+      )
+      .subscribe({
+        next: (res: any) => {
+          this.deleteCart(id, ItemQuantity);
+        },
+      });
   }
-  deleteCart(id: any) {
+  deleteCart(id: any, quantity: any) {
     const tripIndex = this.arr.findIndex((item) => {
+      this.TotalPrice -= item.price * quantity;
       return item._id == id;
     });
+
     this.arr.splice(tripIndex, 1);
+  }
+
+  changeQuantity(cartItem: any, quantity: any) {
+    cartItem.totalPrice = cartItem.price * quantity;
+    cartItem.totalQuantity = quantity;
+    cartItem.availableSeats = cartItem.maxGroupSize - quantity;
+    // while (cartItem.maxGroupSize >= 1) {
+    // }
+    this.TotalPrice += cartItem.totalPrice;
+    this.TotalQuantity += parseInt(cartItem.totalQuantity);
+    this._UserService
+      .updateQuantity(
+        cartItem._id,
+        this.TotalQuantity,
+        this.TotalPrice,
+        cartItem.availableSeats,
+        cartItem.totalPrice,
+        cartItem.totalQuantity
+      )
+      .subscribe({
+        next: (res: any) => {
+          console.log(res);
+        },
+      });
   }
 }

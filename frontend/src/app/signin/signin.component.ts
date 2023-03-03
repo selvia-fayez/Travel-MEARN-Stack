@@ -21,7 +21,7 @@ export class SigninComponent {
           this.router.navigate(['/UserHome']);
         }
         if (this.authServ.companyData.getValue() != null) {
-          this.router.navigate(['/CompanyHome']);
+          this.router.navigate(['/CompanyProfile']);
         }
       },
     });
@@ -67,7 +67,7 @@ export class SigninComponent {
           console.log(response.data._id);
           localStorage.setItem('companyID', response.data._id);
           this.authServ.saveCompanyData();
-          this.router.navigate(['/CompanyHome']);
+          this.router.navigate(['/CompanyProfile']);
         } else {
           this.companyerr = response.message;
         }

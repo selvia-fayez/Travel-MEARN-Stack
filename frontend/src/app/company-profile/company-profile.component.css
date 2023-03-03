@@ -4,3 +4,8 @@
   width:80px !important;
   height:80px !important;
 } */
+
+.opacity:hover {
+  opacity: 0.5;
+  transition: all 0.4s ease;
+}

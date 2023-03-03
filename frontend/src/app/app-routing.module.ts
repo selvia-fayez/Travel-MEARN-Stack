@@ -12,12 +12,12 @@ import { CompanyInfoComponent } from './company-profile/company-info/company-inf
 import { CartdetailsComponent } from './cartdetails/cartdetails.component';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ReviewComponent } from './review/review.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'signin', pathMatch: 'full' },
+  { path: '', redirectTo: 'LandingPage', pathMatch: 'full' },
   {
-    path: 'CompanyHome',
-    canActivate: [AuthGuard],
+    path: 'LandingPage',
     component: CompanyLandingPageComponent,
   },
   {
@@ -51,6 +51,7 @@ const routes: Routes = [
   { path: 'cart', canActivate: [AuthGuard], component: CartdetailsComponent },
   { path: 'favorite', canActivate: [AuthGuard], component: FavoriteComponent },
   { path: 'checkout', canActivate: [AuthGuard], component: CheckoutComponent },
+  { path: 'review/:id', canActivate: [AuthGuard], component: ReviewComponent },
 
   { path: '**', component: NotFoundComponent },
 ];

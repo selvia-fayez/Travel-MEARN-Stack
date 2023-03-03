@@ -58,13 +58,13 @@ export class AuthService {
     localStorage.removeItem('userToken');
     localStorage.removeItem('userID');
     this.userData.next(null);
-    this._Router.navigate(['/signin']);
+    this._Router.navigate(['/LandingPage']);
   }
   companylogout() {
     localStorage.removeItem('companyToken');
     localStorage.removeItem('companyID');
     this.companyData.next(null);
-    this._Router.navigate(['/signin']);
+    this._Router.navigate(['/LandingPage']);
   }
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

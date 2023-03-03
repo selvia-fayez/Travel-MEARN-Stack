@@ -10,6 +10,18 @@ import { AuthService } from '../services/auth.service';
 })
 export class SignupComponent {
   constructor(private authServ: AuthService, private router: Router) {}
+  ngOnInit(): void {
+    this.authServ.userData.subscribe({
+      next: () => {
+        if (this.authServ.userData.getValue() != null) {
+          this.router.navigate(['/UserHome']);
+        }
+        if (this.authServ.companyData.getValue() != null) {
+          this.router.navigate(['/CompanyProfile']);
+        }
+      },
+    });
+  }
   usererr: string = '';
   companyerr: string = '';
   userisLoading: boolean = false;

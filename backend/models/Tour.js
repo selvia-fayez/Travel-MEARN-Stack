@@ -18,12 +18,12 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    createdBy:{
+    createdBy: {
       type: mongoose.Types.ObjectId,
       ref: "Company",
     },
     photo: {
-      type: String,
+      type: Array,
       required: true,
     },
     desc: {
@@ -46,15 +46,22 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    reviews: [
-      {
-        type: mongoose.Types.ObjectId,
-        ref: "Review",
-      },
-    ],
+    reviews: {
+      type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Review" }],
+      default: [],
+    },
     featured: {
       type: Boolean,
       default: false,
+    },
+    totalPrice: {
+      type: Number,
+    },
+    totalQuantity: {
+      type: Number,
+    },
+    availableSeats: {
+      type: Number,
     },
   },
   { timestamps: true }

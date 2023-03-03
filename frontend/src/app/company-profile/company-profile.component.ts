@@ -2,7 +2,8 @@ import { TripService } from './../services/trip.service';
 import { Component, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { CompanyInfoService } from './company-info/company-info.service';
+import { CompanyInfoService } from '../services/company-info.service';
+import { TourService } from '../services/tour.service';
 
 @Component({
   selector: 'app-company-profile',
@@ -10,11 +11,37 @@ import { CompanyInfoService } from './company-info/company-info.service';
   styleUrls: ['./company-profile.component.css'],
 })
 export class CompanyProfileComponent {
+  customOptions: any = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    autoplay: true,
+    dots: true,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 2,
+      },
+      740: {
+        items: 3,
+      },
+      940: {
+        items: 6,
+      },
+    },
+    nav: true,
+  };
   triperr: string = '';
   isLoading: boolean = false;
   companyInfo: any;
   constructor(
     private tripServ: TripService,
+    private tourServ: TourService,
     private authServ: AuthService,
     private companyInfoService: CompanyInfoService
   ) {
@@ -48,6 +75,8 @@ export class CompanyProfileComponent {
     this.alldata = {
       ...this.alldata,
       createdBy: this.authServ.CompanyId,
+      totalPrice: parseInt(this.addTripForm.get('price')?.value),
+      availableSeats: parseInt(this.addTripForm.get('maxGroupSize')?.value),
     };
 
     this.tripServ.addTrip(this.alldata).subscribe({
@@ -137,18 +166,27 @@ export class CompanyProfileComponent {
 
   onPickImage(event: Event) {
     const input = event.target as HTMLInputElement;
-    const file = input.files ? input.files[0] : null;
+    const files = input.files as FileList;
     this.addTripForm.patchValue({
-      photo: file,
+      photo: files,
     });
     this.addTripForm.get('photo')?.updateValueAndValidity();
   }
   onPickEditImage(event: Event) {
     const input = event.target as HTMLInputElement;
-    const file = input.files ? input.files[0] : null;
+    const files = input.files as FileList;
     this.editTripForm.patchValue({
-      photo: file,
+      photo: files,
     });
     this.editTripForm.get('photo')?.updateValueAndValidity();
+  }
+
+  search(event: any) {
+    let searchInput = event.target.value;
+    this.tourServ.search(searchInput).subscribe({
+      next: (response) => {
+        this.allTrips = response.data;
+      },
+    });
   }
 }

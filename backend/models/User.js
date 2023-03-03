@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: "Tour" }],
     default: [],
   },
+  totalQuantity: { type: Number },
+  totalPrice: { type: Number },
 });
 
 export default mongoose.model("User", userSchema);

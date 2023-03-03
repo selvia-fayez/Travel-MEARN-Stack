@@ -3,8 +3,9 @@ import Tour from "../../../models/Tour.js";
 
 const createTour = async (req, res) => {
   try {
-    const photo =
-      `${req.protocol}://${req.get("host")}/uploads/` + req.file.filename;
+    const photo = req.files.map(
+      (file) => `${req.protocol}://${req.get("host")}/uploads/` + file.filename
+    );
     const newTour = new Tour({ ...req.body, photo });
     const savedTour = await newTour.save();
     res.status(200).json({
@@ -22,11 +23,16 @@ const createTour = async (req, res) => {
 // update Tour
 const updateTour = async (req, res) => {
   const id = req.params.id;
-  console.log(req.id);
   try {
-    const photo =
-      `${req.protocol}://${req.get("host")}/uploads/` + req.file.filename;
-    let data = { ...req.body, photo };
+    let data = { ...req.body };
+    if (req.files) {
+      const photo = req.files.map(
+        (file) =>
+          `${req.protocol}://${req.get("host")}/uploads/` + file.filename
+      );
+      data.photo = photo;
+    }
+
     let updateTour = await Tour.findByIdAndUpdate(
       id,
       {
@@ -92,7 +98,7 @@ const getAllTour = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Successfully ",
+      message: "Successfully",
       count: tours.length,
       data: tours,
     });
@@ -105,20 +111,28 @@ const getAllTour = async (req, res) => {
 };
 // search tour
 const getTourBySearch = async (req, res) => {
-  //  i means case sensitive
-  const city = new RegExp(req.query.city, "i");
-  const distance = parseInt(req.query.distance);
-  const maxGroupSize = parseInt(req.query.maxGroupSize);
-
+  const title = new RegExp(req.query.title, "i");
+  const companyId = req.params.companyId;
   try {
-    const tours = await Tour.find({
-      city,
-      distance: { $gte: distance },
-      maxGroupSize: { $gte: maxGroupSize },
-    });
+    //  i means case sensitive
+    // if (city !== "undefined") {
+    //   const city = new RegExp(req.query.city, "i");
+    // }
+    // if (distance !== "undefined") {
+    //   const distance = parseInt(req.query.distance);
+    // }
+    // if (maxGroupSize !== "undefined") {
+    //   const maxGroupSize = parseInt(req.query.maxGroupSize);
+    // }
+    const tours = await Tour.find({ title: title, createdBy: companyId });
+    // const tours = await Tour.find({
+    //   city,
+    //   distance: { $gte: distance },
+    //   maxGroupSize: { $gte: maxGroupSize },
+    // });
     res
       .status(200)
-      .json({ success: true, message: "Successfully ", data: tours });
+      .json({ success: true, message: "Successfully", data: tours });
   } catch (err) {
     res.status(404).json({
       success: false,
@@ -142,7 +156,26 @@ const getCompanyTour = async (req, res) => {
     });
   }
 };
-
+const createReview = async (req, res) => {
+  try {
+    const reviewId = req.params.reviewId;
+    const tripId = req.params.tripId;
+    const updatedReview = await Tour.findByIdAndUpdate(
+      { _id: tripId },
+      { $push: { reviews: reviewId } }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Successfully added Review",
+      updatedReview,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "can't add review",
+    });
+  }
+};
 export {
   getAllTour,
   updateTour,
@@ -151,4 +184,5 @@ export {
   createTour,
   getTourBySearch,
   getCompanyTour,
+  createReview,
 };

@@ -1,27 +1,32 @@
 import express from "express";
-import * as userController from "./trip.controller.js";
+import * as tripController from "./trip.controller.js";
 const router = express.Router();
 import upload from "../../../Middleware/upload.js";
 
 // create new tour
-router.post("/", upload.single("photo"), userController.createTour);
+router.post("/", upload.array("photo", 10), tripController.createTour);
 
 // update  tour
-router.put("/:id", userController.updateTour);
+router.put("/:id", upload.array("photo", 10), tripController.updateTour);
 
 // delete  tour
-router.delete("/:id", userController.deleteTour);
+router.delete("/:id", tripController.deleteTour);
 
 // get single  tour
-router.get("/:id", userController.getSingleTour);
+router.get("/:id", tripController.getSingleTour);
 
 // get All tour
-router.get("/", userController.getAllTour);
+router.get("/", tripController.getAllTour);
 
 // get tour by search
 
-router.get("/search/getTourBySearch", userController.getTourBySearch);
+router.get(
+  "/search/:companyId/getTourBySearch",
+  tripController.getTourBySearch
+);
 
-router.get("/company/:companyId", userController.getCompanyTour);
+router.get("/company/:companyId", tripController.getCompanyTour);
+
+router.post("/:tripId/:reviewId", tripController.createReview);
 
 export default router;

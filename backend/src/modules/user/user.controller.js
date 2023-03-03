@@ -1,4 +1,5 @@
 import User from "../../../models/User.js";
+import Tour from "../../../models/Tour.js";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/generateTooken.js";
 
@@ -52,13 +53,13 @@ const addToCart = async (req, res) => {
     );
     res.status(200).json({
       success: true,
-      message: "Successfully added user",
+      message: "Successfully added to cart",
       updatedCart,
     });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "This Email has an account, try to sign in ",
+      message: "can't add to cart",
     });
   }
 };
@@ -72,13 +73,13 @@ const addToFavorite = async (req, res) => {
     );
     res.status(200).json({
       success: true,
-      message: "Successfully added user",
+      message: "Successfully added to favourites",
       updatedFavorite,
     });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "This Email has an account, try to sign in ",
+      message: "can't add to favourite",
     });
   }
 };
@@ -86,19 +87,38 @@ const deleteFromCart = async (req, res) => {
   try {
     const userId = req.params.userId;
     const tripId = req.query.tripId;
+    //const totalQuantity = parseInt(req.query.totalQuantity);
+    const totalPrice = parseInt(req.query.totalPrice);
+    const newdata = await User.findByIdAndUpdate(
+      userId,
+      { totalPrice: totalPrice }
+      // { totalQuantity: totalQuantity }
+    );
+    //const tripQuantity = parseInt(req.query.ItemQuantity);
+    const tripPrice = parseInt(req.query.ItemPrice);
+    const availableSeats = parseInt(req.query.availableSeats);
+
+    const newdata2 = await Tour.findByIdAndUpdate(tripId, {
+      totalPrice: tripPrice,
+      totalQuantity: 1,
+      availableSeats: availableSeats,
+      maxGroupSize: availableSeats,
+    });
     const updatedCart = await User.updateOne(
       { _id: userId },
       { $pull: { cart: tripId } }
     );
     res.status(200).json({
       success: true,
-      message: "Successfully added user",
+      message: "Successfully deleted form cart",
       updatedCart,
+      newdata,
+      newdata2,
     });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "This Email has an account, try to sign in ",
+      message: "can't delete",
     });
   }
 };
@@ -112,13 +132,13 @@ const deleteFromFavorite = async (req, res) => {
     );
     res.status(200).json({
       success: true,
-      message: "Successfully added user",
+      message: "Successfully deleted from favourites",
       updatedCart,
     });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "This Email has an account, try to sign in ",
+      message: "can't delete",
     });
   }
 };
@@ -128,11 +148,11 @@ const getUserCart = async (req, res) => {
     const cart = await User.findById(userId)
       .populate({ path: "cart" })
       .select("cart");
-
+    const cartDetails = await User.findById(userId);
     res.status(200).json({
       success: true,
-      message: "Successfully added user",
       cart,
+      cartDetails,
     });
   } catch (err) {
     res.status(500).json({
@@ -150,16 +170,46 @@ const getUserFavorite = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Successfully added user",
       favorite,
     });
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "This Email has an account, try to sign in ",
     });
   }
 };
+const ChangeQuantity = async (req, res) => {
+  try {
+    const userID = req.params.userID;
+    const totalQuantity = parseInt(req.query.totalQuantity);
+    const totalPrice = parseInt(req.query.totalPrice);
+    const newdata = await User.findByIdAndUpdate(
+      userID,
+      { totalPrice: totalPrice },
+      { totalQuantity: totalQuantity }
+    );
+    const tripID = req.params.tripID;
+    const availableSeats = parseInt(req.query.availableSeats);
+    const ItemPrice = parseInt(req.query.ItemPrice);
+    const ItemQuanity = parseInt(req.query.ItemQuanity);
+    const newdata2 = await Tour.findByIdAndUpdate(tripID, {
+      maxGroupSize: availableSeats,
+      totalQuantity: ItemQuanity,
+      totalPrice: ItemPrice,
+      availableSeats: availableSeats,
+    });
+    res.status(200).json({
+      success: true,
+      newdata,
+      newdata2,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+    });
+  }
+};
+
 export {
   SignUp,
   SignIn,
@@ -169,4 +219,5 @@ export {
   deleteFromFavorite,
   getUserCart,
   getUserFavorite,
+  ChangeQuantity,
 };
