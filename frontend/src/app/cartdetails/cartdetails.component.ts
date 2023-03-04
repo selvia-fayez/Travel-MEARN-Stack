@@ -15,7 +15,7 @@ export class CartdetailsComponent {
   arr: any[] = [];
   cartDetails: any;
   TotalPrice: any;
-  TotalQuantity: any = 0;
+  TotalQuantity: any;
 
   constructor(private _UserService: UserService) {}
   ngOnInit() {
@@ -41,6 +41,7 @@ export class CartdetailsComponent {
         ItemQuantity,
         ItemPrice,
         this.TotalPrice,
+        this.TotalQuantity,
         availableSeats
       )
       .subscribe({
@@ -52,6 +53,7 @@ export class CartdetailsComponent {
   deleteCart(id: any, quantity: any) {
     const tripIndex = this.arr.findIndex((item) => {
       this.TotalPrice -= item.price * quantity;
+      this.TotalQuantity -= quantity;
       return item._id == id;
     });
 

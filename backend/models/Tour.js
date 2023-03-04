@@ -63,6 +63,7 @@ const tourSchema = new mongoose.Schema(
     availableSeats: {
       type: Number,
     },
+    stops: { type: [], default: [] },
   },
   { timestamps: true }
 );

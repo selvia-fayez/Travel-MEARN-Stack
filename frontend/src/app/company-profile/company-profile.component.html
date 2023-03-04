@@ -142,6 +142,45 @@
                   >
                 </div>
               </div>
+              <div class="col-md-4 col-sm-12">
+                <label class="mt-2">Stops</label>
+                <br />
+                <input
+                  type="button"
+                  class="btn btn-outline-info"
+                  value="Add Stop"
+                  (click)="addStop()"
+                />
+              </div>
+              <div formArrayName="stops" class="row">
+                <div
+                  class="row d-flex align-items-center"
+                  *ngFor="let stop of stops().controls; let i = index"
+                  [formGroupName]="i"
+                >
+                  <div class="col-md-4">
+                    Stop Title :
+                    <input
+                      type="text"
+                      formControlName="Stoptitle"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-md-4">
+                    Duration:
+                    <input
+                      type="text"
+                      formControlName="duration"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-md-2 mt-3">
+                    <button (click)="removeStop(i)" class="btn btn-danger">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
               <div class="col-md-4 col-sm-12 my-2">
                 <label for="address">Address</label>
                 <input
@@ -274,7 +313,7 @@
                   >
                 </div>
               </div>
-              <div class="col-md-4 col-sm-12 my-2">
+              <div class="col-12 my-2">
                 <label for="image">Image</label>
                 <img src="" />
                 <input

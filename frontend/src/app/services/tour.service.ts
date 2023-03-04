@@ -31,4 +31,8 @@ export class TourService {
       `${this.baseUrl}search/${companyId}/getTourBySearch${query}`
     );
   }
+  searchBytitle(title: string): Observable<any> {
+    const query = `?title=${title}`;
+    return this.http.get(`${this.baseUrl}search/getTourBySearch${query}`);
+  }
 }

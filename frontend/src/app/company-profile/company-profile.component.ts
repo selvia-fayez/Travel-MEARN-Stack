@@ -1,6 +1,12 @@
 import { TripService } from './../services/trip.service';
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+  FormArray,
+} from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { CompanyInfoService } from '../services/company-info.service';
 import { TourService } from '../services/tour.service';
@@ -43,8 +49,12 @@ export class CompanyProfileComponent {
     private tripServ: TripService,
     private tourServ: TourService,
     private authServ: AuthService,
+    private fb: FormBuilder,
     private companyInfoService: CompanyInfoService
   ) {
+    // this.addStopsForm = this.fb.group({
+    //   stops: this.fb.array([]),
+    // });
     this.getCompanyTrips();
   }
   ngOnInit(): void {
@@ -54,6 +64,7 @@ export class CompanyProfileComponent {
       },
     });
   }
+
   addTripForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
@@ -65,7 +76,24 @@ export class CompanyProfileComponent {
     maxGroupSize: new FormControl('', [Validators.required]),
     startDate: new FormControl('', [Validators.required]),
     endDate: new FormControl('', [Validators.required]),
+    stops: this.fb.array([]),
   });
+  //addStopsForm: FormGroup;
+  stops(): FormArray {
+    return this.addTripForm.get('stops') as FormArray;
+  }
+  newStop(): FormGroup {
+    return this.fb.group({
+      Stoptitle: '',
+      duration: '',
+    });
+  }
+  addStop() {
+    this.stops().push(this.newStop());
+  }
+  removeStop(i: number) {
+    this.stops().removeAt(i);
+  }
 
   alldata: object = {};
   currentid: any;

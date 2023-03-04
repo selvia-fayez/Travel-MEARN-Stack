@@ -34,7 +34,6 @@ export class HomeComponent {
     nav: false,
   };
   trips: any;
-  trip: any;
   favorite: any;
   constructor(
     private _TourService: TourService,
@@ -54,6 +53,14 @@ export class HomeComponent {
       next: (res: any) => {
         this.favorite = res.data;
         this._Router.navigate(['/favorite']);
+      },
+    });
+  }
+  search(event: any) {
+    let searchInput = event.target.value;
+    this._TourService.searchBytitle(searchInput).subscribe({
+      next: (response) => {
+        this.trips = response.data;
       },
     });
   }

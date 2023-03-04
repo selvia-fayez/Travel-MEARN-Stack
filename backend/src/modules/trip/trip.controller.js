@@ -6,6 +6,11 @@ const createTour = async (req, res) => {
     const photo = req.files.map(
       (file) => `${req.protocol}://${req.get("host")}/uploads/` + file.filename
     );
+    const { stops } = req.body;
+    console.log(stops);
+    // stops.map((data) => {
+    //   console.log(data);
+    // });
     const newTour = new Tour({ ...req.body, photo });
     const savedTour = await newTour.save();
     res.status(200).json({
@@ -140,6 +145,20 @@ const getTourBySearch = async (req, res) => {
     });
   }
 };
+const SearchByTtile = async (req, res) => {
+  const title = new RegExp(req.query.title, "i");
+  try {
+    const tours = await Tour.find({ title: title });
+    res
+      .status(200)
+      .json({ success: true, message: "Successfully", data: tours });
+  } catch (err) {
+    res.status(404).json({
+      success: false,
+      message: "Not Found",
+    });
+  }
+};
 const getCompanyTour = async (req, res) => {
   try {
     const companyId = req.params.companyId;
@@ -185,4 +204,5 @@ export {
   getTourBySearch,
   getCompanyTour,
   createReview,
+  SearchByTtile,
 };

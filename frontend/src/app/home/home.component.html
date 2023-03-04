@@ -13,7 +13,16 @@
     </div>
   </div>
 </div>
+
 <div class="container">
+  <div class="row mt-5">
+    <form class="input-group" (change)="search($event)">
+      <input class="form-control mr-sm-2" type="text" placeholder="search" />
+      <button class="btn btn-outline-info" type="submit">
+        <i class="fa-solid fa-search"></i>
+      </button>
+    </form>
+  </div>
   <div class="row">
     <div *ngFor="let item of trips" class="col-md-4 mt-5">
       <div class="card text-center" style="height: 60vh">

@@ -2,6 +2,7 @@ import { UserService } from '../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { TourService } from '../services/tour.service';
+import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-favorite',

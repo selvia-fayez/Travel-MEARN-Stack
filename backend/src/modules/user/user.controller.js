@@ -87,14 +87,14 @@ const deleteFromCart = async (req, res) => {
   try {
     const userId = req.params.userId;
     const tripId = req.query.tripId;
-    //const totalQuantity = parseInt(req.query.totalQuantity);
+    const totalQuantity = parseInt(req.query.totalQuantity);
     const totalPrice = parseInt(req.query.totalPrice);
     const newdata = await User.findByIdAndUpdate(
       userId,
-      { totalPrice: totalPrice }
-      // { totalQuantity: totalQuantity }
+      { totalPrice: totalPrice },
+      { totalQuantity: totalQuantity }
     );
-    //const tripQuantity = parseInt(req.query.ItemQuantity);
+    // const tripQuantity = parseInt(req.query.ItemQuantity);
     const tripPrice = parseInt(req.query.ItemPrice);
     const availableSeats = parseInt(req.query.availableSeats);
 

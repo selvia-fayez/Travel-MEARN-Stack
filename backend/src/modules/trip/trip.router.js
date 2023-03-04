@@ -25,6 +25,8 @@ router.get(
   tripController.getTourBySearch
 );
 
+router.get("/search/getTourBySearch", tripController.SearchByTtile);
+
 router.get("/company/:companyId", tripController.getCompanyTour);
 
 router.post("/:tripId/:reviewId", tripController.createReview);

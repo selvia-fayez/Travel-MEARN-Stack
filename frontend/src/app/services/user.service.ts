@@ -34,10 +34,11 @@ export class UserService {
     ItemQuantity: any,
     ItemPrice: any,
     totalPrice: any,
+    totalQuantity: any,
     availableSeats: any
   ) {
     let userID = localStorage.getItem('userID');
-    const query = `&ItemQuantity=${ItemQuantity}&ItemPrice=${ItemPrice}&totalPrice=${totalPrice}&availableSeats=${availableSeats}`;
+    const query = `&ItemQuantity=${ItemQuantity}&ItemPrice=${ItemPrice}&totalPrice=${totalPrice}&totalQuantity=${totalQuantity}&availableSeats=${availableSeats}`;
     return this._HttpClient.delete(
       'http://localhost:3000/users/cart/' + userID + '?tripId=' + id + query,
       {}
