@@ -181,7 +181,7 @@
   </div>
   <div class="row my-5">
     <p class="h2">Itinerary</p>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center mb-3">
       <div
         style="
           height: 50px;
@@ -200,27 +200,34 @@
       </div>
       <p class="m-3 h5">You'll start the journey from the company location</p>
     </div>
-    <div class="d-flex my-3">
-      <!-- <p>loop</p> -->
-      <div
-        style="
-          height: 50px;
-          width: 50px;
-          background-color: rgb(187, 126, 126);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        "
-      >
-        <h1 class="mt-3">1</h1>
+    <div class="vl"></div>
+
+    <div
+      class="d-flex my-3"
+      *ngFor="let stop of tripData.data.stops; let i = index"
+    >
+      <div class="d-flex">
+        <div
+          style="
+            height: 50px;
+            width: 50px;
+            background-color: rgb(187, 126, 126);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <h1 class="mt-3">{{ i + 1 }}</h1>
+        </div>
+        <div class="ms-3">
+          <p class="h5">{{ stop.stoptitle }}</p>
+          <p class="h5">stop : {{ stop.duration }}</p>
+        </div>
       </div>
-      <div class="ms-3">
-        <p class="h5">title</p>
-        <p class="h5">stop : 2hour</p>
-      </div>
+      <div class="newvl"></div>
     </div>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center" style="z-index: 2">
       <div
         style="
           height: 50px;

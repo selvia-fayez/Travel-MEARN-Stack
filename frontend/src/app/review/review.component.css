@@ -1,0 +1,14 @@
+.vl {
+    border-left: 6px dotted rgb(187, 126, 126);
+    height:50px;
+    position: absolute;
+    left: 10.2%;
+    margin-top: 103px;    
+}
+.newvl {
+    border-left: 6px dotted rgb(187, 126, 126);
+    height: 55px;
+    position: absolute;
+    left: 10.2%;
+    margin-top: 50px;
+}

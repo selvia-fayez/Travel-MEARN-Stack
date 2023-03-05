@@ -16,24 +16,21 @@ export class TripService {
   addTrip(tripdata: any): Observable<any> {
     const formData = new FormData();
     for (let key in tripdata) {
-      // if (key === 'stops') {
-      //   for (let i = 0; i < tripdata['stops'].length; i++) {
-      //     formData.append('stops', tripdata['stops'][i]);
-      //   }
-      // }
-
-      // for (const index in tripdata['stops']) {
-      //   // instead of passing tripdata['stops'].toString() iterate for each item and append it to form.
-      //   formData.append(`stops[${index}]`, tripdata['stops'][index].toString());
-      // }
-
-      formData.append(key, tripdata[key]);
-      if (key === 'photo') {
-        for (let i = 0; i < tripdata['photo'].length; i++) {
-          formData.append('photo', tripdata['photo'][i]);
+      if (key === 'stops') {
+        for (let i = 0; i < tripdata['stops'].length; i++) {
+          formData.append('stoptitle', tripdata['stops'][i].Stoptitle);
+          formData.append('duration', tripdata['stops'][i].duration);
+        }
+      } else {
+        formData.append(key, tripdata[key]);
+        if (key === 'photo') {
+          for (let i = 0; i < tripdata['photo'].length; i++) {
+            formData.append('photo', tripdata['photo'][i]);
+          }
         }
       }
     }
+    console.log(formData.get('stops'));
     return this._HttpClient.post('http://localhost:3000/tours/', formData);
   }
 

@@ -78,7 +78,6 @@ export class CompanyProfileComponent {
     endDate: new FormControl('', [Validators.required]),
     stops: this.fb.array([]),
   });
-  //addStopsForm: FormGroup;
   stops(): FormArray {
     return this.addTripForm.get('stops') as FormArray;
   }
@@ -106,7 +105,7 @@ export class CompanyProfileComponent {
       totalPrice: parseInt(this.addTripForm.get('price')?.value),
       availableSeats: parseInt(this.addTripForm.get('maxGroupSize')?.value),
     };
-
+    console.log(this.alldata);
     this.tripServ.addTrip(this.alldata).subscribe({
       next: (response) => {
         this.isLoading = false;

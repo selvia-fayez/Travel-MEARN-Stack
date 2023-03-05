@@ -6,12 +6,12 @@ const createTour = async (req, res) => {
     const photo = req.files.map(
       (file) => `${req.protocol}://${req.get("host")}/uploads/` + file.filename
     );
-    const { stops } = req.body;
-    console.log(stops);
-    // stops.map((data) => {
-    //   console.log(data);
-    // });
-    const newTour = new Tour({ ...req.body, photo });
+    const { stoptitle, duration } = req.body;
+    let stops = [];
+    for (let i = 0; i < stoptitle.length; i++) {
+      stops.push({ stoptitle: stoptitle[i], duration: duration[i] });
+    }
+    const newTour = new Tour({ ...req.body, photo, stops });
     const savedTour = await newTour.save();
     res.status(200).json({
       success: true,
