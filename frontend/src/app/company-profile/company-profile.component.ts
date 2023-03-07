@@ -40,7 +40,6 @@ export class CompanyProfileComponent {
         items: 6,
       },
     },
-    nav: true,
   };
   triperr: string = '';
   isLoading: boolean = false;
@@ -147,6 +146,7 @@ export class CompanyProfileComponent {
     maxGroupSize: new FormControl('', [Validators.required]),
     startDate: new FormControl('', [Validators.required]),
     endDate: new FormControl('', [Validators.required]),
+    stops: this.fb.array([]),
   });
   show(trip: any) {
     this.currentid = trip._id;

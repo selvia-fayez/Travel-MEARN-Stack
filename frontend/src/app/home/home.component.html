@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
   <div class="row">
     <div class="home d-flex align-items-center">
       <div class="homeContent text-center mb-5 w-100">
@@ -8,41 +8,113 @@
           Visit <span class="changecontent"></span>
         </h5>
         <br />
-        <button class="btn btn-warning">Let's Start</button>
+         <button class="btn btn-warning">Let's Start</button> 
       </div>
     </div>
   </div>
-</div>
+</div> -->
+<header>
+  <div
+    class="overcolor vh-100 d-flex justify-content-center align-items-center text-white text-center"
+  >
+    <div class="home d-flex align-items-center">
+      <div class="homeContent text-center mb-5 w-100">
+        <h5 class="text-white font-weight-bold">WELCOME TO WORLD</h5>
+        <br />
+        <h5 class="lead fw-bold text-white">
+          Visit <span class="changecontent"></span>
+        </h5>
+        <br />
+        <!-- <button class="btn btn-warning">Let's Start</button> -->
+      </div>
+    </div>
+  </div>
+</header>
 
 <div class="container">
   <div class="row mt-5">
-    <form class="input-group" (change)="search($event)">
+    <form class="input-group col">
+      <p>Filter by price: (from 90 to 1000)</p>
+      <input
+        type="range"
+        class="form-range"
+        min="90"
+        max="1000"
+        id="customrange"
+        (change)="FilterByPrice()"
+      />
+      <!-- <button class="btn btn-outline-info" type="submit">Filter</button> -->
+    </form>
+    <form class="input-group col" (change)="search($event)">
       <input class="form-control mr-sm-2" type="text" placeholder="search" />
       <button class="btn btn-outline-info" type="submit">
         <i class="fa-solid fa-search"></i>
       </button>
     </form>
   </div>
-  <div class="row">
+
+  <section id="popular" class="row">
     <div *ngFor="let item of trips" class="col-md-4 mt-5">
+      <div class="item bg-white shadow-lg">
+        <a [routerLink]="['/review', item._id]">
+          <owl-carousel-o [options]="customOptions">
+            <ng-container *ngFor="let image of item.photo">
+              <ng-template carouselSlide>
+                <img
+                  [src]="image"
+                  class="position-relative"
+                  style="height: 40vh"
+                />
+              </ng-template>
+            </ng-container>
+          </owl-carousel-o>
+        </a>
+        <div class="popularContent p-3 text-black">
+          <div class="badgeContent d-flex position-relative">
+            <p class="mt-2">{{ item.price | currency }}</p>
+
+            <a class="favv" style="position: absolute; right: 0">
+              <i
+                (click)="addToFavorite(item._id)"
+                class="material-icons"
+                style="color: rgb(138, 133, 133); z-index: 14100"
+                >favorite</i
+              ></a
+            >
+          </div>
+          <p
+            class="text-muted p-2 overflow-auto"
+            style="max-height: 20vh; height: 20vh"
+          >
+            {{ item.desc }}
+          </p>
+
+          <p class="text-muted">{{ item.title }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <div *ngFor="let item of trips" class="col-md-4 mt-5">
       <div class="card text-center" style="height: 60vh">
         <div class="card">
           <owl-carousel-o [options]="customOptions">
             <ng-container *ngFor="let image of item.photo">
               <ng-template carouselSlide>
-                <img [src]="image" style="height: 50vh" />
+                <img [src]="image" class="w-100 h-100 cover-fill" />
               </ng-template>
             </ng-container>
           </owl-carousel-o>
         </div>
 
         <div class="card-body text overlay" style="z-index: 5">
-          <p class="card-title text-dark bold h3 mt-3">{{ item.title }}</p>
-          <p class="card-text text-dark h6">
+          <p class="card-title text-prbtn-primary bold h3 mt-3">
+            {{ item.title }}
+          </p>
+          <p class="card-text text-prbtn-primary h6">
             {{ item.desc }}
           </p>
 
-          <a [routerLink]="['/review', item._id]" class="btn btn-dark mt-5"
+          <a [routerLink]="['/review', item._id]" class="btn btn-primary mt-5"
             >See More</a
           >
 
@@ -50,13 +122,12 @@
             <i
               (click)="addToFavorite(item._id)"
               class="material-icons"
-              style="color: darkred"
+              style="color: rgb(90, 88, 88)"
               >favorite</i
             ></a
           >
         </div>
         <div class="card-footer text-black py-3">{{ item.title }}</div>
       </div>
-    </div>
-  </div>
+    </div> -->
 </div>

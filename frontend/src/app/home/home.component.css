@@ -1,10 +1,4 @@
-.home{
-    background-image: url(../../assets/background.png);
-    background-size: 100% 100%;
-    background-position: center center ;
-    height: 100vh;
-  }
-  .homeContent{
+ .homeContent{
   margin-left: 10;
       padding-top: 100px;
   }
@@ -18,22 +12,22 @@
     content: ' ';
     color: #ffa500;
     text-shadow: 0px 1px 1px black;
-    animation: changetext 10s infinite linear;
+    animation: changetext 15s infinite linear;
   }
   @keyframes changetext{
-    0%{content: "France";}
-    10%{content: "Spain";}
-    20%{content: "United States";}
-    30%{content: "China";}
-    40%{content: "India";}
-    50%{content: "Pakistan";}
-    60%{content: "Italy";}
-    70%{content: "Turkey";}
-    80%{content: "Mexico";}
-    90%{content: "Germany";}
-    100%{content: "United kingdom";}
+    0%{content: "Aswan";}
+    10%{content: "Siwa";}
+    20%{content: "Dahab";}
+    30%{content: "Hurghada";}
+    40%{content: "Sharm El Sheikh";}
+    50%{content: "Marsa Alam";}
+    60%{content: "Luxor";}
+    70%{content: "Fayoum";}
+    80%{content: "Safaga";}
+    90%{content: "Alexandria";}
+    100%{content: "Giza";}
   } 
-  h3 {
+  /* h3 {
     display: block;
     font-size: 1.17em;
     margin-block-start: 1em;
@@ -68,4 +62,32 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
-  }
+  } */
+#popular .item img:hover {
+  /* transform: scale(1.1); */
+  opacity: 0.8;
+}
+
+#popular .item {
+  overflow: hidden;
+  cursor: pointer;
+}
+
+#popular img {
+  transition: all 0.5s;
+}
+header {
+  background-image: url(../../assets/bg.jpg);
+  background-size: 100% 100%;
+  background-position: center center;
+}
+
+.overcolor {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.favv:hover{
+  color: red;
+}

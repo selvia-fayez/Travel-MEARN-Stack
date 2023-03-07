@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ReviewService } from '../services/review.service';
 import { TourService } from '../services/tour.service';
 import { UserService } from '../services/user.service';
+import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import * as mapboxgl from 'mapbox-gl';
 
 @Component({
   selector: 'app-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.css'],
 })
-export class ReviewComponent {
+export class ReviewComponent implements OnInit {
   customOptions: any = {
     loop: true,
     mouseDrag: true,
@@ -35,7 +37,6 @@ export class ReviewComponent {
         items: 6,
       },
     },
-    nav: true,
   };
   tripData: any = [];
 
@@ -49,14 +50,45 @@ export class ReviewComponent {
   ) {
     this.getTripDetails();
     this.getTripReviews();
+    (mapboxgl as typeof mapboxgl).accessToken =
+      'pk.eyJ1IjoibW9zdGFmYW0yNSIsImEiOiJjbGV2YTFpc3MwMmhxM3lzODFnOW95bG45In0.bzvaVaSlpiRRtoqCRsOUCg';
   }
+  ngOnInit(): void {
+    let map = new mapboxgl.Map({
+      container: 'map',
+      // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+      style: 'mapbox://styles/mapbox/streets-v12',
+      center: [32.89983, 24.088938],
+      zoom: 13,
+    });
+    // Add the control to the map.
+    map.addControl(
+      new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        mapboxgl: mapboxgl,
+      })
+    );
+    setTimeout(this.function1, 10000);
+  }
+  address: any;
   getTripDetails() {
     let { id } = this._ActivatedRoute.snapshot.params;
     this.tripID = id;
-    this.Tourserv.getTourById(id).subscribe((data) => {
-      this.tripData = data;
-      //console.log(this.tripData.data);
+    this.Tourserv.getTourById(id).subscribe({
+      next: (response) => {
+        this.tripData = response;
+        this.address = this.tripData.data.address;
+        //console.log(this.address);
+      },
     });
+  }
+  function1() {
+    console.log(this.address);
+    (
+      document.querySelector(
+        '.mapboxgl-ctrl-geocoder--input'
+      ) as HTMLInputElement
+    ).value = `${this.address}`;
   }
   // goCheckout() {
   //   this.router.navigate(['/checkout']);

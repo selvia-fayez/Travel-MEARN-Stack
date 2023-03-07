@@ -1,14 +1,21 @@
 .vl {
-    border-left: 6px dotted rgb(187, 126, 126);
+    border-left: 6px dotted #ffc107;
     height:50px;
     position: absolute;
     left: 10.2%;
-    margin-top: 103px;    
+    margin-top: -2%;    
 }
 .newvl {
-    border-left: 6px dotted rgb(187, 126, 126);
+    border-left: 6px dotted #ffc107;
     height: 55px;
     position: absolute;
     left: 10.2%;
     margin-top: 50px;
+}
+#map {
+    position: absolute;
+    top: 220vh;
+    right: 9%;
+    width: 40%;
+    bottom: -180vh;
 }

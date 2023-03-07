@@ -18,6 +18,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { CartdetailsComponent } from './cartdetails/cartdetails.component';
 import { ReviewComponent } from './review/review.component';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { ReviewComponent } from './review/review.component';
     FavoriteComponent,
     CartdetailsComponent,
     ReviewComponent,
+    ScrollToTopComponent
   ],
   imports: [
     BrowserModule,

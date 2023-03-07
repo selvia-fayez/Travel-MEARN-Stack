@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
   <div class="row">
     <div class="col-md-8 d-flex align-items-center me-auto">
       <div class="item m-3">
@@ -28,7 +28,7 @@
   <div class="row">
     <div class="col-md-12">
       <a
-        class="btn btn-outline-primary float-end"
+        class="btn btn-light float-end"
         data-bs-toggle="modal"
         data-bs-target="#AddTripModal"
       >
@@ -40,7 +40,7 @@
 <div class="container">
   <div class="row">
     <div *ngFor="let trip of allTrips" class="col-md-4 mt-5">
-      <div class="card text-center" style="height: 80vh">
+      <div class="card text-center" style="height: auto">
         <div class="card-header" style="height: 60vh">
           <owl-carousel-o [options]="customOptions">
             <ng-container *ngFor="let image of trip.photo">
@@ -52,7 +52,10 @@
           <h4 class="card-title text-dark p-2">{{ trip.title }}</h4>
         </div>
         <div class="card-body" let index="index">
-          <p class="card-text text-dark">
+          <p
+            class="card-text text-dark"
+            style="max-height: 20vh; overflow: auto; height: 20vh"
+          >
             {{ trip.desc }}
           </p>
           <button

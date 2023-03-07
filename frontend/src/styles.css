@@ -6,7 +6,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
 
 :root {
-    --bg-main: #131722;
+    --bg-main: rgb(80, 136, 131);
     --light-bg: #24baef;
     --main-font: 'Montserrat Alternates', sans-serif;
     --text-color: #fff;

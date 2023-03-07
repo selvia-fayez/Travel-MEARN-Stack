@@ -1,19 +1,115 @@
-:root
+ :root
 {
     --color:#0078ff;
     --bs-font-sans-serif: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
-}
-*{
+}  *{
     color: #000;
 }
-.home{
+/* home */
+/* .home{
   background-image: url(../../assets/full-shot-travel.avif);
   background-size: 100% 100%;
   background-position: center center;
   height: 100vh;
+} */
+/* home */
+ .contactBtn:hover
+{
+  background-color: transparent !important;
+  color: #0dcaf0 !important;
+}
+.learnBtn:hover
+{
+  background-color: transparent !important;
+  color: #0dcaf0 !important;
+  border-color: #0DCAF0;
+}
+.shape {
+  display: block;
+  position: absolute;
+  animation: rotate 8s linear infinite;
+}
+
+.shape-1 {
+  top: 60px;
+  left: 47%;
+}
+
+.shape-2 {
+  top: 20%;
+  right: 50px;
+  animation-delay: 0.25s;
+}
+
+.shape-3 {
+  left: 40%;
+  bottom: 20%;
+  animation-delay: 0.5s;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(1turn); }
+}
+/* destination */
+#destinations .item:hover img
+{
+  /* transform: scale(1.2); */
+  transform: scale(1.08);
+  filter: blur(0.7);
+}
+#destinations .item:hover .destinationLayer
+{
+  display: block;
+}
+#destinations .item
+{
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+#destinations img
+{
+  transition: all 1s !important;
+}
+.cardContent
+{
+  margin-bottom: -50px !important;
+}
+
+#destinations .cardContent
+{
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+}
+#destinations .item img {
+  position: relative;
+}
+#destinations .item .destinationLayer
+{
+  position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left: 0;
+    display: none;
+    background-color: rgba(0, 0, 0,0.5);
+}
+/* popular */
+#popular .item:hover img{
+  transform: scale(1.1);
+}
+#popular .item
+{
+  overflow: hidden;
+  cursor: pointer;
+}
+#popular img{
+  transition: all 0.5s;
 }
 /* services */
-.services .row
+ .services .row
 {
   background-color:  #f1f1f1 ;
   padding: 30px;
@@ -24,6 +120,14 @@
   background-color: #fff;
   padding: 10px;
 
+}
+.col-md-3 .servicesItem
+{
+  transition: all 1s;
+}
+.services
+{
+  cursor: pointer;
 }
 /* statastic */
 .iconBrdr
@@ -57,7 +161,7 @@
 }
 
 /* blog */
-.blog-border
+ .blog-border
 {
     width: 40px;
     height: 5px;
@@ -75,7 +179,7 @@
 {
     text-decoration: none;
 }
-.blog-info img
+ .blog-info img
 {
     width: 15%;
     border-radius: 50%;
@@ -84,7 +188,7 @@
 {
     background-color: rgba(0,0,0,.03);
 }
-.blog-info i
+ .blog-info i
 {
     display: inline;
 }
@@ -100,7 +204,7 @@
     color: var(--color);
 }
 
-.blog-image:hover img
+ .blog-image:hover img
 {
   transform: scale(1.2);
 }
@@ -108,8 +212,11 @@
 {
   overflow: hidden !important;
 }
-
-.blog-content
+.blog
+{
+  cursor: pointer;
+}
+ .blog-content
 {
     text-align: left;
     padding: 20px;
@@ -118,14 +225,54 @@
 {
     color: #4e4e4e;
 }
+.blogParagraph:hover
+{
+  color: #6AB9B1 !important;
+}
+#blog .item:hover img{
+  transform: scale(1.1);
+}
+#blog .item
+{
+  overflow: hidden;
+  cursor: pointer;
+}
+#blog img{
+  transition: all 0.5s;
+}
+.morgan-info
+{
+  display: flex;
+}
+/* ourfooter */
+#ourFooter
+{
+  background-image: url('../../assets/footer-bg.png');
+  background-position: center center;
+  background-size: 100% 100%;
+  background-color: #192541 !important;
+}
+.icon:hover i
+{
+  background-color: #0DCAF0 !important;
+}
+.icon
+{
+  cursor: pointer;
+}
 /* portfolio */
-.portfolio .item:hover img
+ .portfolio .item:hover img
 {
   transform: scale(1.2);
+}
+.portfolio img
+{
+  transition: all 1s;
 }
 .portfolio .item
 {
   overflow: hidden;
+  cursor: pointer;
 }
 /* footer */
 .footer a
@@ -133,3 +280,8 @@
   text-decoration: none !important;
   color: #fff;
 }
+
+
+
+
+
