@@ -14,8 +14,8 @@
 }
 #map {
     position: absolute;
-    top: 220vh;
+    top: 125vh;
     right: 9%;
     width: 40%;
-    bottom: -180vh;
+    bottom: -90vh;
 }

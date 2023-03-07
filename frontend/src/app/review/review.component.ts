@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -13,7 +13,7 @@ import * as mapboxgl from 'mapbox-gl';
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.css'],
 })
-export class ReviewComponent implements OnInit {
+export class ReviewComponent implements AfterViewInit {
   customOptions: any = {
     loop: true,
     mouseDrag: true,
@@ -53,7 +53,7 @@ export class ReviewComponent implements OnInit {
     (mapboxgl as typeof mapboxgl).accessToken =
       'pk.eyJ1IjoibW9zdGFmYW0yNSIsImEiOiJjbGV2YTFpc3MwMmhxM3lzODFnOW95bG45In0.bzvaVaSlpiRRtoqCRsOUCg';
   }
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     let map = new mapboxgl.Map({
       container: 'map',
       // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
@@ -68,7 +68,11 @@ export class ReviewComponent implements OnInit {
         mapboxgl: mapboxgl,
       })
     );
-    setTimeout(this.function1, 10000);
+    (
+      document.querySelector(
+        '.mapboxgl-ctrl-geocoder--input'
+      ) as HTMLInputElement
+    ).value = `${this.address}`;
   }
   address: any;
   getTripDetails() {
@@ -78,18 +82,10 @@ export class ReviewComponent implements OnInit {
       next: (response) => {
         this.tripData = response;
         this.address = this.tripData.data.address;
-        //console.log(this.address);
       },
     });
   }
-  function1() {
-    console.log(this.address);
-    (
-      document.querySelector(
-        '.mapboxgl-ctrl-geocoder--input'
-      ) as HTMLInputElement
-    ).value = `${this.address}`;
-  }
+
   // goCheckout() {
   //   this.router.navigate(['/checkout']);
   // }
