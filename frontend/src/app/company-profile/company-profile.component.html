@@ -426,6 +426,7 @@
                   >
                 </div>
               </div>
+
               <div class="col-md-4 col-sm-12 my-2">
                 <label for="city">City</label>
                 <input
@@ -445,6 +446,46 @@
                     *ngIf="editTripForm.controls['city'].hasError('required')"
                     >City is Required</span
                   >
+                </div>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <label class="mt-2">Stops</label>
+                <br />
+                <input
+                  type="button"
+                  class="btn btn-outline-info"
+                  value="Add Stop"
+                  (click)="addnewStop()"
+                />
+              </div>
+              <div formArrayName="newstops" class="row">
+                <div
+                  class="row d-flex align-items-center"
+                  *ngFor="let stop of newstops().controls; let i = index"
+                  [formGroupName]="i"
+                >
+                  <div class="col-md-5">
+                    Stop Title :
+                    <input
+                      type="text"
+                      formControlName="Stoptitle"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-md-5">
+                    Duration:
+                    <input
+                      type="text"
+                      formControlName="duration"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col-md-2 mt-2">
+                    <p></p>
+                    <button (click)="removenewStop(i)" class="btn btn-danger">
+                      <i class="fa-solid fa-xmark"></i>
+                    </button>
+                  </div>
                 </div>
               </div>
               <div class="col-md-4 col-sm-12 my-2">
@@ -583,7 +624,7 @@
                   >
                 </div>
               </div>
-              <div class="col-md-4 col-sm-12 my-2">
+              <div class="col-12 my-2">
                 <label for="image">Image</label>
                 <img src="" />
                 <input
@@ -627,6 +668,39 @@
                     >Description is Required</span
                   >
                 </div>
+              </div>
+              <div class="col col-sm-12 my-2" *ngIf="!emptystops">
+                <label for="Stops">Stops</label>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Stop Title</th>
+                      <th scope="col">Duration</th>
+                      <th scope="col"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let stop of allstops; let i = index">
+                      <th scope="row">{{ i + 1 }}</th>
+                      <td>{{ stop.stoptitle }}</td>
+                      <td>{{ stop.duration }}</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td class="">
+                        <button
+                          class="btn btn-danger"
+                          id="removestops"
+                          (click)="removeStops()"
+                        >
+                          Delete All Stops
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
 

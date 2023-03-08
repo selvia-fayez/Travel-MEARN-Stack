@@ -44,6 +44,7 @@ export class CompanyProfileComponent {
   triperr: string = '';
   isLoading: boolean = false;
   companyInfo: any;
+  emptystops: boolean = false;
   constructor(
     private tripServ: TripService,
     private tourServ: TourService,
@@ -51,9 +52,6 @@ export class CompanyProfileComponent {
     private fb: FormBuilder,
     private companyInfoService: CompanyInfoService
   ) {
-    // this.addStopsForm = this.fb.group({
-    //   stops: this.fb.array([]),
-    // });
     this.getCompanyTrips();
   }
   ngOnInit(): void {
@@ -80,7 +78,16 @@ export class CompanyProfileComponent {
   stops(): FormArray {
     return this.addTripForm.get('stops') as FormArray;
   }
+  newstops(): FormArray {
+    return this.editTripForm.get('newstops') as FormArray;
+  }
   newStop(): FormGroup {
+    return this.fb.group({
+      Stoptitle: '',
+      duration: '',
+    });
+  }
+  newnewStop(): FormGroup {
     return this.fb.group({
       Stoptitle: '',
       duration: '',
@@ -89,12 +96,20 @@ export class CompanyProfileComponent {
   addStop() {
     this.stops().push(this.newStop());
   }
+  addnewStop() {
+    this.newstops().push(this.newnewStop());
+  }
+
   removeStop(i: number) {
     this.stops().removeAt(i);
+  }
+  removenewStop(i: number) {
+    this.newstops().removeAt(i);
   }
 
   alldata: object = {};
   currentid: any;
+  allstops: any;
   addTrip(addTripForm: FormGroup) {
     this.isLoading = true;
     this.alldata = addTripForm.value;
@@ -146,10 +161,12 @@ export class CompanyProfileComponent {
     maxGroupSize: new FormControl('', [Validators.required]),
     startDate: new FormControl('', [Validators.required]),
     endDate: new FormControl('', [Validators.required]),
-    stops: this.fb.array([]),
+    newstops: this.fb.array([]),
   });
+  trip: any;
   show(trip: any) {
     this.currentid = trip._id;
+    this.trip = trip;
     this.editTripForm.patchValue({
       title: trip.title,
       price: trip.price,
@@ -163,6 +180,12 @@ export class CompanyProfileComponent {
       endDate: trip.endDate,
       _id: trip._id,
     });
+    this.allstops = trip.stops;
+    if (trip.stops.length === 0) {
+      (document.getElementById('removestops') as HTMLInputElement).disabled =
+        true;
+      this.emptystops = true;
+    }
   }
 
   editTrip(editTripForm: FormGroup) {
@@ -190,7 +213,19 @@ export class CompanyProfileComponent {
       },
     });
   }
-
+  removeStops() {
+    this.tripServ.deleteStops(this.currentid).subscribe({
+      next: (response) => {
+        if (response.message === 'Successfully Deleted Stops') {
+          this.trip.stops = [];
+          this.show(this.trip);
+          (
+            document.getElementById('removestops') as HTMLInputElement
+          ).disabled = true;
+        }
+      },
+    });
+  }
   onPickImage(event: Event) {
     const input = event.target as HTMLInputElement;
     const files = input.files as FileList;

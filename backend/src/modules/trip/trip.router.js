@@ -12,6 +12,8 @@ router.put("/:id", upload.array("photo", 10), tripController.updateTour);
 // delete  tour
 router.delete("/:id", tripController.deleteTour);
 
+router.put("/Stops/:id", tripController.deleteStops);
+
 // get single  tour
 router.get("/:id", tripController.getSingleTour);
 

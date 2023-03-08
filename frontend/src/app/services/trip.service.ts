@@ -44,10 +44,17 @@ export class TripService {
   update(id: any, tripdata: any): Observable<any> {
     const formData = new FormData();
     for (let key in tripdata) {
-      formData.append(key, tripdata[key]);
-      if (key === 'photo') {
-        for (let i = 0; i < tripdata['photo'].length; i++) {
-          formData.append('photo', tripdata['photo'][i]);
+      if (key === 'newstops') {
+        for (let i = 0; i < tripdata['newstops'].length; i++) {
+          formData.append('stoptitle', tripdata['newstops'][i].Stoptitle);
+          formData.append('duration', tripdata['newstops'][i].duration);
+        }
+      } else {
+        formData.append(key, tripdata[key]);
+        if (key === 'photo') {
+          for (let i = 0; i < tripdata['photo'].length; i++) {
+            formData.append('photo', tripdata['photo'][i]);
+          }
         }
       }
     }
@@ -55,5 +62,8 @@ export class TripService {
   }
   deleteTrip(id: any): Observable<any> {
     return this._HttpClient.delete(url + `tours/${id}`);
+  }
+  deleteStops(id: any): Observable<any> {
+    return this._HttpClient.put(url + `tours/stops/${id}`, {});
   }
 }

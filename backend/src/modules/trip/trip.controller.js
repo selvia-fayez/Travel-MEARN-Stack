@@ -37,7 +37,12 @@ const updateTour = async (req, res) => {
       );
       data.photo = photo;
     }
-
+    const { stoptitle, duration } = req.body;
+    let stops = [];
+    for (let i = 0; i < stoptitle.length; i++) {
+      stops.push({ stoptitle: stoptitle[i], duration: duration[i] });
+    }
+    data.stops = stops;
     let updateTour = await Tour.findByIdAndUpdate(
       id,
       {
@@ -53,10 +58,11 @@ const updateTour = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "failed  to update  tour, just try again",
+      message: "failed to update tour, just try again",
     });
   }
 };
+
 // delete Tour
 const deleteTour = async (req, res) => {
   //const { id } = req.body;
@@ -70,10 +76,28 @@ const deleteTour = async (req, res) => {
   } catch (err) {
     res.status(500).json({
       success: false,
-      message: "failed  to delete  tour, just try again",
+      message: "failed to delete tour, just try again",
     });
   }
 };
+const deleteStops = async (req, res) => {
+  const tripId = req.params.id;
+  try {
+    let updateTour = await Tour.findByIdAndUpdate(tripId, { stops: [] });
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully Deleted Stops",
+      updateTour,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "failed to delete stops, just try again",
+    });
+  }
+};
+
 // get single  Tour
 const getSingleTour = async (req, res) => {
   const id = req.params.id;
@@ -205,4 +229,5 @@ export {
   getCompanyTour,
   createReview,
   SearchByTtile,
+  deleteStops,
 };

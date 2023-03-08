@@ -14,17 +14,22 @@ export class CartdetailsComponent {
   deletedTrip: any;
   arr: any[] = [];
   cartDetails: any;
-  TotalPrice: any;
-  TotalQuantity: any;
+  totalPrice: number = 0;
+  totalQuantity: number = 0;
 
   constructor(private _UserService: UserService) {}
   ngOnInit() {
     this._UserService.getUserCart().subscribe({
       next: (res: any) => {
         this.arr = res.cart.cart;
+        console.log(this.arr);
         this.cartDetails = res.cartDetails;
-        this.TotalPrice = this.cartDetails.totalPrice;
-        this.TotalQuantity = this.cartDetails.totalQuantity;
+        this.arr.forEach((e) => {
+          this.totalPrice += e.totalPrice ? e.totalPrice : 0;
+          this.totalQuantity += parseInt(e.totalQuantity)
+            ? parseInt(e.totalQuantity)
+            : 0;
+        });
       },
     });
   }
@@ -34,26 +39,28 @@ export class CartdetailsComponent {
     ItemPrice: any,
     availableSeats: any
   ) {
-    availableSeats += parseInt(ItemQuantity);
-    this._UserService
-      .deleteFromCart(
-        id,
-        ItemQuantity,
-        ItemPrice,
-        this.TotalPrice,
-        this.TotalQuantity,
-        availableSeats
-      )
-      .subscribe({
-        next: (res: any) => {
-          this.deleteCart(id, ItemQuantity);
-        },
-      });
+    availableSeats += ItemQuantity ? parseInt(ItemQuantity) : 0;
+    if (id) {
+      this._UserService
+        .deleteFromCart(
+          id,
+          ItemQuantity,
+          ItemPrice,
+          this.totalPrice,
+          this.totalQuantity,
+          availableSeats
+        )
+        .subscribe({
+          next: (res: any) => {
+            this.deleteCart(id, ItemQuantity);
+          },
+        });
+    }
   }
   deleteCart(id: any, quantity: any) {
     const tripIndex = this.arr.findIndex((item) => {
-      this.TotalPrice -= item.price * quantity;
-      this.TotalQuantity -= quantity;
+      this.totalPrice -= item.price * quantity;
+      this.totalQuantity -= quantity;
       return item._id == id;
     });
 
@@ -64,22 +71,29 @@ export class CartdetailsComponent {
     cartItem.totalPrice = cartItem.price * quantity;
     cartItem.totalQuantity = quantity;
     cartItem.availableSeats = cartItem.maxGroupSize - quantity;
-    // while (cartItem.maxGroupSize >= 1) {
-    // }
-    this.TotalPrice += cartItem.totalPrice;
-    this.TotalQuantity += parseInt(cartItem.totalQuantity);
+
+    this.totalPrice = 0;
+    this.totalQuantity = 0;
+    this.arr.forEach((e) => {
+      this.totalPrice += e.totalPrice ? e.totalPrice : 0;
+      this.totalQuantity += parseInt(e.totalQuantity)
+        ? parseInt(e.totalQuantity)
+        : 0;
+    });
+    // this.totalPrice += cartItem.totalPrice;
+    // this.totalQuantity += parseInt(cartItem.totalQuantity);
     this._UserService
       .updateQuantity(
         cartItem._id,
-        this.TotalQuantity,
-        this.TotalPrice,
+        this.totalQuantity,
+        this.totalPrice,
         cartItem.availableSeats,
         cartItem.totalPrice,
         cartItem.totalQuantity
       )
       .subscribe({
         next: (res: any) => {
-          console.log(res);
+          // console.log(res);
         },
       });
   }
