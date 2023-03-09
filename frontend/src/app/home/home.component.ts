@@ -64,9 +64,13 @@ export class HomeComponent {
       },
     });
   }
+  CurrentPrice: any = 90;
   FilterByPrice() {
     let price = (document.getElementById('customrange') as HTMLInputElement)
       .value;
-    this.trips = this.trips.filter((trip: any) => trip.price < price);
+    this.trips = this.trips.filter(
+      (trip: any) => trip.price < price && trip.price > 90
+    );
+    this.CurrentPrice = price;
   }
 }

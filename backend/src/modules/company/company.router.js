@@ -7,4 +7,5 @@ router.post("/signup", companyController.SignUp);
 
 router.post("/signin", companyController.SignIn);
 
+router.put("/:companyId", companyController.UpdatePackage);
 export default router;

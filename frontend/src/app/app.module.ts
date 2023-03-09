@@ -19,6 +19,7 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { CartdetailsComponent } from './cartdetails/cartdetails.component';
 import { ReviewComponent } from './review/review.component';
 import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
     FavoriteComponent,
     CartdetailsComponent,
     ReviewComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,6 +46,7 @@ import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
     MatTabsModule,
     BrowserAnimationsModule,
     CarouselModule,
+    MatRadioModule,
   ],
   providers: [MatTabsModule],
   bootstrap: [AppComponent],

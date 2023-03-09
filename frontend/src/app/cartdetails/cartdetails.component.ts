@@ -1,7 +1,8 @@
 import { UserService } from '../services/user.service';
 import { TourService } from './../services/tour.service';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CheckoutService } from '../services/checkout.service';
 TourService;
 @Component({
   selector: 'app-cartdetails',
@@ -17,7 +18,11 @@ export class CartdetailsComponent {
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
-  constructor(private _UserService: UserService) {}
+  constructor(
+    private _UserService: UserService,
+    private checkout: CheckoutService,
+    private router: Router
+  ) {}
   ngOnInit() {
     this._UserService.getUserCart().subscribe({
       next: (res: any) => {
@@ -32,6 +37,7 @@ export class CartdetailsComponent {
         });
       },
     });
+    this.invokeStripe();
   }
   deleteFromCart(
     id: any,
@@ -96,5 +102,59 @@ export class CartdetailsComponent {
           // console.log(res);
         },
       });
+  }
+  goStripe(totalPrice: Number) {}
+
+  title = 'sample payment';
+  paymentHandler: any = null;
+
+  success: boolean = false;
+
+  failure: boolean = false;
+
+  makePayment(amount: number) {
+    const paymentHandler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51MdK34BHKpkIAv1vkMkBmtETNEKHmNhGwcBLFqyfFq4wOA2UK23Ehp7VvLIpqbUOjWLT1gAOu35I1PLMKq0mOCBE003bn2xmA5',
+      locale: 'auto',
+      token: function (stripeToken: any) {
+        paymentstripe(stripeToken);
+      },
+    });
+
+    const paymentstripe = (stripeToken: any) => {
+      this.router.navigate(['/UserHome']);
+      // this.checkout.makePayment(stripeToken).subscribe((data: any) => {
+      //   if (data.data === 'success') {
+      //     this.success = true;
+      //     //delete cart
+      //   } else {
+      //     this.failure = true;
+      //   }
+      // });
+    };
+
+    paymentHandler.open({
+      name: 'Payment',
+      description: '',
+      amount: amount * 100,
+    });
+  }
+
+  invokeStripe() {
+    if (!window.document.getElementById('stripe-script')) {
+      const script = window.document.createElement('script');
+      script.id = 'stripe-script';
+      script.type = 'text/javascript';
+      script.src = 'https://checkout.stripe.com/checkout.js';
+      script.onload = () => {
+        this.paymentHandler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51MdK34BHKpkIAv1vkMkBmtETNEKHmNhGwcBLFqyfFq4wOA2UK23Ehp7VvLIpqbUOjWLT1gAOu35I1PLMKq0mOCBE003bn2xmA5',
+          locale: 'auto',
+          token: function (stripeToken: any) {},
+        });
+      };
+
+      window.document.body.appendChild(script);
+    }
   }
 }

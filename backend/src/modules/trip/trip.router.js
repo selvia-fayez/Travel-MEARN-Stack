@@ -4,7 +4,11 @@ const router = express.Router();
 import upload from "../../../Middleware/upload.js";
 
 // create new tour
-router.post("/", upload.array("photo", 10), tripController.createTour);
+router.post(
+  "/:companyId",
+  upload.array("photo", 10),
+  tripController.createTour
+);
 
 // update  tour
 router.put("/:id", upload.array("photo", 10), tripController.updateTour);

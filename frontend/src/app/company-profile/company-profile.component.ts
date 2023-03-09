@@ -10,6 +10,8 @@ import {
 import { AuthService } from '../services/auth.service';
 import { CompanyInfoService } from '../services/company-info.service';
 import { TourService } from '../services/tour.service';
+import { MatRadioChange } from '@angular/material/radio';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-company-profile',
@@ -131,6 +133,15 @@ export class CompanyProfileComponent {
       },
       error: (res: any) => {
         this.triperr = res.error.message;
+        // if (
+        //   res.error.message ===
+        //   'Your Free subscription Ended, Go to your profile and choose new package'
+        // ) {
+        //   //diaplay model
+        //   (<any>$('#myModel')).modal('show');
+        // } else {
+        //   this.triperr = res.error.message;
+        // }
       },
     });
   }

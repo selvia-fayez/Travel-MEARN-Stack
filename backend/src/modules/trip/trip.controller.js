@@ -1,28 +1,71 @@
 import Tour from "../../../models/Tour.js";
+import Company from "../../../models/Company.js";
+
 // create new tour
 
 const createTour = async (req, res) => {
-  try {
-    const photo = req.files.map(
-      (file) => `${req.protocol}://${req.get("host")}/uploads/` + file.filename
-    );
-    const { stoptitle, duration } = req.body;
-    let stops = [];
-    for (let i = 0; i < stoptitle.length; i++) {
-      stops.push({ stoptitle: stoptitle[i], duration: duration[i] });
+  const companyId = req.params.companyId;
+  const company = await Company.findById(companyId);
+  if (company.packageType === "Free subscription") {
+    const tours = await Tour.find({
+      createdBy: companyId,
+    });
+    let lengthofTrips = tours.length;
+    if (lengthofTrips < 3) {
+      try {
+        const photo = req.files.map(
+          (file) =>
+            `${req.protocol}://${req.get("host")}/uploads/` + file.filename
+        );
+        const { stoptitle, duration } = req.body;
+        let stops = [];
+        for (let i = 0; i < stoptitle.length; i++) {
+          stops.push({ stoptitle: stoptitle[i], duration: duration[i] });
+        }
+        const newTour = new Tour({ ...req.body, photo, stops });
+        const savedTour = await newTour.save();
+        res.status(200).json({
+          success: true,
+          message: "Successfully created tour",
+          data: savedTour,
+        });
+      } catch (err) {
+        res.status(500).json({
+          success: false,
+          message: err.message,
+        });
+      }
+    } else {
+      res.status(500).json({
+        success: false,
+        message:
+          "Your Free subscription Ended, Go to your profile and choose new package",
+      });
     }
-    const newTour = new Tour({ ...req.body, photo, stops });
-    const savedTour = await newTour.save();
-    res.status(200).json({
-      success: true,
-      message: "Successfully created tour",
-      data: savedTour,
-    });
-  } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: err.message,
-    });
+  } else {
+    try {
+      const photo = req.files.map(
+        (file) =>
+          `${req.protocol}://${req.get("host")}/uploads/` + file.filename
+      );
+      const { stoptitle, duration } = req.body;
+      let stops = [];
+      for (let i = 0; i < stoptitle.length; i++) {
+        stops.push({ stoptitle: stoptitle[i], duration: duration[i] });
+      }
+      const newTour = new Tour({ ...req.body, photo, stops });
+      const savedTour = await newTour.save();
+      res.status(200).json({
+        success: true,
+        message: "Successfully created tour",
+        data: savedTour,
+      });
+    } catch (err) {
+      res.status(500).json({
+        success: false,
+        message: err.message,
+      });
+    }
   }
 };
 // update Tour

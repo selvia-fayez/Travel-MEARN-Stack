@@ -7,6 +7,7 @@ import { TourService } from '../services/tour.service';
 import { UserService } from '../services/user.service';
 import * as MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 import * as mapboxgl from 'mapbox-gl';
+import { CheckoutService } from '../services/checkout.service';
 
 @Component({
   selector: 'app-review',
@@ -46,12 +47,16 @@ export class ReviewComponent implements AfterViewInit {
     private router: Router,
     private reviewserv: ReviewService,
     private _UserService: UserService,
-    private Authserv: AuthService
+    private Authserv: AuthService,
+    private checkout: CheckoutService
   ) {
     this.getTripDetails();
     this.getTripReviews();
     (mapboxgl as typeof mapboxgl).accessToken =
       'pk.eyJ1IjoibW9zdGFmYW0yNSIsImEiOiJjbGV2YTFpc3MwMmhxM3lzODFnOW95bG45In0.bzvaVaSlpiRRtoqCRsOUCg';
+  }
+  ngOnInit() {
+    this.invokeStripe();
   }
   ngAfterViewInit(): void {
     let map = new mapboxgl.Map({
@@ -75,6 +80,7 @@ export class ReviewComponent implements AfterViewInit {
     ).value = `${this.address}`;
   }
   address: any;
+  boolstops: any = true;
   getTripDetails() {
     let { id } = this._ActivatedRoute.snapshot.params;
     this.tripID = id;
@@ -82,6 +88,9 @@ export class ReviewComponent implements AfterViewInit {
       next: (response) => {
         this.tripData = response;
         this.address = this.tripData.data.address;
+        if (this.tripData.data.address.stops.length === 1) {
+          this.boolstops = false;
+        }
       },
     });
   }
@@ -161,5 +170,59 @@ export class ReviewComponent implements AfterViewInit {
         this.router.navigate(['/cart']);
       },
     });
+  }
+  goStripe(totalPrice: Number) {}
+
+  title = 'sample payment';
+  paymentHandler: any = null;
+
+  success: boolean = false;
+
+  failure: boolean = false;
+
+  makePayment(amount: number) {
+    const paymentHandler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51MdK34BHKpkIAv1vkMkBmtETNEKHmNhGwcBLFqyfFq4wOA2UK23Ehp7VvLIpqbUOjWLT1gAOu35I1PLMKq0mOCBE003bn2xmA5',
+      locale: 'auto',
+      token: function (stripeToken: any) {
+        paymentstripe(stripeToken);
+      },
+    });
+
+    const paymentstripe = (stripeToken: any) => {
+      this.router.navigate(['/UserHome']);
+      // this.checkout.makePayment(stripeToken).subscribe((data: any) => {
+      // if (data.data === 'success') {
+      //   this.success = true;
+      //delete cart
+      // } else {
+      //   this.failure = true;
+      // }
+      // });
+    };
+
+    paymentHandler.open({
+      name: 'Payment',
+      description: '',
+      amount: amount * 100,
+    });
+  }
+
+  invokeStripe() {
+    if (!window.document.getElementById('stripe-script')) {
+      const script = window.document.createElement('script');
+      script.id = 'stripe-script';
+      script.type = 'text/javascript';
+      script.src = 'https://checkout.stripe.com/checkout.js';
+      script.onload = () => {
+        this.paymentHandler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51MdK34BHKpkIAv1vkMkBmtETNEKHmNhGwcBLFqyfFq4wOA2UK23Ehp7VvLIpqbUOjWLT1gAOu35I1PLMKq0mOCBE003bn2xmA5',
+          locale: 'auto',
+          token: function (stripeToken: any) {},
+        });
+      };
+
+      window.document.body.appendChild(script);
+    }
   }
 }

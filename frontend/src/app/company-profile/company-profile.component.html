@@ -401,7 +401,7 @@
         ></button>
       </div>
       <div class="modal-body text-black">
-        <div *ngIf="triperr" class="alert alert-danger">{{ triperr }}</div>
+        <!-- <div *ngIf="triperr" class="alert alert-danger">{{ triperr }}</div> -->
         <div class="container-fluid">
           <form [formGroup]="editTripForm" (ngSubmit)="editTrip(editTripForm)">
             <div class="row">
@@ -721,3 +721,62 @@
     </div>
   </div>
 </div>
+
+<!-- <div id="myModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Subscribe our Newsletter</h5>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <section id="pay">
+          <div class="pay py-5">
+            <p class="mb-4 text-center py-2 h3">
+              Now please choose the length of your plan
+            </p>
+            <div class="payCards d-flex justify-content-around">
+              <mat-radio-group
+                aria-label="Select an option"
+                class="d-flex"
+                (change)="onChangeRadio($event)"
+              >
+                <div
+                  class="card mx-3"
+                  style="width: 18rem; background: rgba(134, 134, 134, 0.342)"
+                >
+                  <div class="card-body">
+                    <mat-radio-button value="1-year subscription">
+                      <p class="card-title h6">1-year subscription</p>
+                      <div class="payDetails">
+                        <p class="card-text">Billed as $35.88 / 1 year.</p>
+                        <span>$2.99 /month</span>
+                      </div>
+                    </mat-radio-button>
+                  </div>
+                </div>
+                <div
+                  class="card mx-3"
+                  style="width: 18rem; background: rgba(134, 134, 134, 0.342)"
+                >
+                  <div class="card-body">
+                    <mat-radio-button value="2-year subscription">
+                      <p class="card-title h6">2-year subscription</p>
+                      <div class="payDetails">
+                        <p class="card-text">Billed as $69.36 / 2 years.</p>
+                        <span>$2.89 /month</span>
+                      </div>
+                    </mat-radio-button>
+                  </div>
+                </div>
+              </mat-radio-group>
+            </div>
+            <div>Your Package is: {{ CompanyPackage }}</div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div> -->

@@ -14,6 +14,7 @@ export class TripService {
   constructor(private _HttpClient: HttpClient, private _Router: Router) {}
 
   addTrip(tripdata: any): Observable<any> {
+    const companyId = localStorage.getItem('companyID');
     const formData = new FormData();
     for (let key in tripdata) {
       if (key === 'stops') {
@@ -31,7 +32,10 @@ export class TripService {
       }
     }
     console.log(formData.get('stops'));
-    return this._HttpClient.post('http://localhost:3000/tours/', formData);
+    return this._HttpClient.post(
+      `http://localhost:3000/tours/${companyId}`,
+      formData
+    );
   }
 
   getTrips(): Observable<any> {

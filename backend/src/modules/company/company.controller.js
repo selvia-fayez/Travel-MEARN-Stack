@@ -3,7 +3,8 @@ import bcrypt from "bcrypt";
 import { generateToken } from "../utils/generateTooken.js";
 
 const SignUp = async (req, res) => {
-  const { Company_name, Email, Password, Phone, Address, CRN } = req.body;
+  const { Company_name, Email, Password, Phone, Address, CRN, packageType } =
+    req.body;
   const company = await Company.findOne({ Email });
   if (company) {
     res.json({ message: "Email is already exist" });
@@ -19,6 +20,7 @@ const SignUp = async (req, res) => {
           Phone,
           Address,
           CRN,
+          packageType,
         });
         res.json({ message: "Successfully added Company", data: newCompany });
       }
@@ -52,5 +54,21 @@ const getCompanyInfo = async (req, res, next) => {
     companyInfo,
   });
 };
+const UpdatePackage = async (req, res) => {
+  try {
+    const companyId = req.params.companyId;
+    const { packageType } = req.body;
 
-export { SignUp, SignIn, getCompanyInfo };
+    const company = await Company.findByIdAndUpdate(companyId, { packageType });
+    res.status(200).json({
+      success: true,
+      company,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
+export { SignUp, SignIn, getCompanyInfo, UpdatePackage };

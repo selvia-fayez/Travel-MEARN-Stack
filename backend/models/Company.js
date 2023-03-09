@@ -6,5 +6,6 @@ const companySchema = new mongoose.Schema({
   Address: { type: String, required: true },
   CRN: { type: String, required: true },
   Password: { type: String, required: true },
+  packageType: { type: String },
 });
 export default mongoose.model("Company", companySchema);

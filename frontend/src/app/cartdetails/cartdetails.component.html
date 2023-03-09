@@ -65,7 +65,7 @@
         <div class="total-price">{{ totalPrice | currency }}</div>
       </div>
 
-      <a routerLink="/checkout">Proceed to Checkout</a>
+      <a (click)="makePayment(totalPrice)">Proceed to Checkout</a>
     </div>
   </div>
 </div>

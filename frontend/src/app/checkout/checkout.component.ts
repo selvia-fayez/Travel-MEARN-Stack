@@ -33,6 +33,7 @@ export class CheckoutComponent {
         console.log(data);
         if (data.data === 'success') {
           this.success = true;
+          //nav to home
         } else {
           this.failure = true;
         }

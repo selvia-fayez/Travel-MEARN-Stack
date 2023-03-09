@@ -9,4 +9,8 @@ export class CompanyInfoService {
     const companyId = localStorage.getItem('companyID');
     return this.http.get(this.baseUrl + companyId);
   }
+  UpdatePackage(packageType: any): Observable<any> {
+    const companyId = localStorage.getItem('companyID');
+    return this.http.put(this.baseUrl + companyId, { packageType });
+  }
 }

@@ -1,4 +1,4 @@
-<div class="container w-75">
+<div class="container w-75 mt-5">
   <p class="text-center h1 fw-bold mx-1 mx-md-4 mt-4">Sign up</p>
   <mat-tab-group mat-align-tab="center">
     <mat-tab label="User">
@@ -164,7 +164,7 @@
               <button
                 [disabled]="UserRegisterForm.invalid"
                 type="submit"
-                class="btn btn-danger btn-lg w-25"
+                class="btn btn-outline-info btn-lg w-25"
               >
                 <span>Register</span>
                 <i *ngIf="userisLoading" class="fas fa-spinner fa-spin"></i>
@@ -396,12 +396,83 @@
                 </div>
               </div>
             </div>
+            <section id="pay">
+              <div class="pay py-5">
+                <p class="mb-4 text-center py-2 h3">
+                  Now please choose the length of your plan
+                </p>
+                <div class="payCards d-flex justify-content-around">
+                  <mat-radio-group
+                    aria-label="Select an option"
+                    class="d-flex"
+                    (change)="onChangeRadio($event)"
+                  >
+                    <div
+                      class="card mx-3"
+                      style="
+                        width: 18rem;
+                        background: rgba(134, 134, 134, 0.342);
+                      "
+                    >
+                      <div class="card-body">
+                        <mat-radio-button
+                          value="Free subscription"
+                          class="text-black"
+                        >
+                          <p class="card-title h6">Free subscription</p>
+                          <div class="payDetails">
+                            <p class="card-text">
+                              You can add 3 tours For Free.
+                            </p>
+                          </div>
+                        </mat-radio-button>
+                      </div>
+                    </div>
+                    <div
+                      class="card mx-3"
+                      style="
+                        width: 18rem;
+                        background: rgba(134, 134, 134, 0.342);
+                      "
+                    >
+                      <div class="card-body">
+                        <mat-radio-button value="1-year subscription">
+                          <p class="card-title h6">1-year subscription</p>
+                          <div class="payDetails">
+                            <p class="card-text">Billed as $35.88 / 1 year.</p>
+                            <span>$2.99 /month</span>
+                          </div>
+                        </mat-radio-button>
+                      </div>
+                    </div>
+                    <div
+                      class="card mx-3"
+                      style="
+                        width: 18rem;
+                        background: rgba(134, 134, 134, 0.342);
+                      "
+                    >
+                      <div class="card-body">
+                        <mat-radio-button value="2-year subscription">
+                          <p class="card-title h6">2-year subscription</p>
+                          <div class="payDetails">
+                            <p class="card-text">Billed as $69.36 / 2 years.</p>
+                            <span>$2.89 /month</span>
+                          </div>
+                        </mat-radio-button>
+                      </div>
+                    </div>
+                  </mat-radio-group>
+                </div>
+                <div>Your Package is: {{ CompanyPackage }}</div>
+              </div>
+            </section>
 
             <div class="text-center mb-3 mb-lg-4">
               <button
                 [disabled]="CompanyRegisterForm.invalid"
                 type="submit"
-                class="btn btn-danger btn-lg w-25"
+                class="btn btn-outline-info btn-lg w-25"
               >
                 <span>Register</span>
                 <i *ngIf="companyisLoading" class="fas fa-spinner fa-spin"></i>

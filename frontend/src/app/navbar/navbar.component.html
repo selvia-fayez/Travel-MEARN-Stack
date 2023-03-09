@@ -16,11 +16,21 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 d-flex align-items-center">
         <li class="nav-item">
-          <a class="nav-link navbar-brand fw-bolder" routerLink="/LandingPage"
-            >Travelia</a
-          >
+          <div class="d-flex align-items-center">
+            <a routerLink="/company-info"
+              ><img
+                src="../../assets/logo2.jpeg"
+                class="rounded-circle"
+                style="width: 40px; height: 35px"
+                alt=""
+              />
+            </a>
+            <a class="nav-link navbar-brand fw-bolder" routerLink="/LandingPage"
+              >Travelia</a
+            >
+          </div>
         </li>
         <li class="nav-item">
           <a
@@ -37,17 +47,18 @@
             class="nav-link"
             routerLink="cart"
             routerLinkActive="active"
-            >Cart</a
+          >
+            <i class="fa-solid fa-cart-plus"></i> Cart</a
           >
         </li>
-        <li class="nav-item">
+        <li class="nav-item d-flex align-items-center">
           <a
             *ngIf="UserisLogin"
             class="nav-link"
             routerLink="favorite"
             routerLinkActive="active"
-            >Favourite</a
-          >
+            ><i class="fa-solid fa-heart"></i> Favourite
+          </a>
         </li>
         <li class="nav-item">
           <a
@@ -61,6 +72,13 @@
       </ul>
 
       <ul class="navbar-nav mb-2 mb-lg-0">
+        <li class="nav-item d-flex align-items-center">
+          <span>
+            <i class="fa-brands fa-facebook m-2"></i>
+            <i class="fa-brands fa-twitter m-2"></i>
+            <i class="fa-brands fa-instagram m-2"></i>
+          </span>
+        </li>
         <li class="nav-item">
           <a
             *ngIf="!UserisLogin && !CompanyisLogin"
