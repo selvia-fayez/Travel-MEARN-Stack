@@ -24,6 +24,10 @@ export class CartdetailsComponent {
     private router: Router
   ) {}
   ngOnInit() {
+    this.getCartDetails();
+    this.invokeStripe();
+  }
+  getCartDetails() {
     this._UserService.getUserCart().subscribe({
       next: (res: any) => {
         this.arr = res.cart.cart;
@@ -37,7 +41,6 @@ export class CartdetailsComponent {
         });
       },
     });
-    this.invokeStripe();
   }
   deleteFromCart(
     id: any,
@@ -122,7 +125,14 @@ export class CartdetailsComponent {
     });
 
     const paymentstripe = (stripeToken: any) => {
-      this.router.navigate(['/UserHome']);
+      this._UserService.deleteCartAfterPay().subscribe({
+        next: (res: any) => {
+          this.getCartDetails();
+          this.totalPrice = 0;
+          this.totalQuantity = 0;
+          this.router.navigate(['/UserHome']);
+        },
+      });
       // this.checkout.makePayment(stripeToken).subscribe((data: any) => {
       //   if (data.data === 'success') {
       //     this.success = true;

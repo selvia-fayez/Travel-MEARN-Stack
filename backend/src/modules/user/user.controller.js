@@ -209,6 +209,27 @@ const ChangeQuantity = async (req, res) => {
     });
   }
 };
+const deleteCartAfterPay = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const deletedcart = await User.findByIdAndUpdate(userId, {
+      cart: [],
+      totalPrice: 0,
+      totalQuantity: 0,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: "Successfully deleted",
+      deletedcart,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "can't delete",
+    });
+  }
+};
 
 export {
   SignUp,
@@ -220,4 +241,5 @@ export {
   getUserCart,
   getUserFavorite,
   ChangeQuantity,
+  deleteCartAfterPay,
 };

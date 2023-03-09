@@ -51,6 +51,12 @@ export class UserService {
       {}
     );
   }
+  deleteCartAfterPay() {
+    let userID = localStorage.getItem('userID');
+    return this._HttpClient.delete(
+      `http://localhost:3000/users/cartAfterPay/${userID}`
+    );
+  }
   updateQuantity(
     tripID: any,
     totalQuantity: any,

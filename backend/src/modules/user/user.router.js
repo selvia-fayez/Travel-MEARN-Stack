@@ -11,5 +11,6 @@ router.delete("/favorite/:userId", userController.deleteFromFavorite);
 router.get("/favorite/:userId", userController.getUserFavorite);
 router.get("/cart/:userId", userController.getUserCart);
 router.put("/cart/:userID/:tripID", userController.ChangeQuantity);
+router.delete("/cartAfterPay/:userId", userController.deleteCartAfterPay);
 
 export default router;
